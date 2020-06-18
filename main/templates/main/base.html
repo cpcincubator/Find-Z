@@ -1,0 +1,34 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+<head>
+    {% include 'main/partials/meta.html' %}
+    {% block meta %}
+    {% endblock %}
+    <script src="{% static 'main/js/plugins/webfont/webfont.min.js' %}"></script>
+    <script>
+        WebFont.load({
+            google: {"families": ["Lato:300,400,700,900"]},
+            custom: {
+                "families": ["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"],
+                urls: ['{% static "main/css/fonts.min.css" %}']
+            },
+            active: function () {
+                sessionStorage.fonts = true;
+            }
+        });
+    </script>
+    {% include 'main/partials/styles.html' %}
+    {% block styles %}
+    {% endblock %}
+</head>
+<body>
+{% block body %}
+{% endblock %}
+    {% include 'main/partials/footer.html' %}
+{% include 'main/partials/scripts.html' %}
+{% block scripts %}
+{% endblock %}
+</body>
+</html>

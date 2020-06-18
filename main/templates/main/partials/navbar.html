@@ -1,0 +1,61 @@
+{% load static %}
+
+<nav class="navbar navbar-expand navbar-light bg-primary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href=""><i class="fas fa-greater-than-equal"></i>Find-Z</a>
+    <ul class="navbar-nav large-screen">
+      <li class="nav-item mx-3">
+        <a class="nav-link" href=""><span><img class="nav-icon" src={% static 'main/img/icons/react.svg' %} alt="Academic"></span> Academic</a>
+      </li>
+      <li class="nav-item mr-3">
+        <a class="nav-link" href=""><span><img class="nav-icon" src={% static 'main/img/icons/programming.svg' %} alt="Programming"></span> Programming</a>
+      </li>
+      <li class="nav-item mr-3">
+        <a class="nav-link" href=""><span><img class="nav-icon" src={% static 'main/img/icons/infinity.svg' %} alt="DevOps"></span> DevOps</a>
+      </li>
+      <li class="nav-item mr-3">
+        <a class="nav-link" href=""><span><img class="nav-icon" src={% static 'main/img/icons/brush.svg' %} alt="Design"></span> Design</a>
+      </li> 
+    </ul>		
+    <!-- Dropdown Content--> 		
+    <ul class="navbar-nav small-screen mr-auto">
+      <li class="nav-item dropdown px-1">
+        <a class="nav-link dropdown-toggle" href="" id="navbar-primary_dropdown_1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar-primary_dropdown_1">
+          <a class="dropdown-item" href=""><span><img class="nav-icon" src={% static 'main/img/icons/react.svg' %} alt="Academic"></span> Academic</a>
+          <a class="dropdown-item" href=""><span><img class="nav-icon" src={% static 'main/img/icons/programming.svg' %} alt="Programming"></span> Programming</a>
+          <a class="dropdown-item" href=""><span><img class="nav-icon" src={% static 'main/img/icons/infinity.svg' %} alt="DevOps"></span> DevOps</a>
+          <a class="dropdown-item" href=""><span><img class="nav-icon" src={% static 'main/img/icons/brush.svg' %} alt="Design"></span> Design</a>
+        </div>
+      </li>
+    </ul>
+
+    <!-- Search -->
+      <form class="form-group form-inline my-2 col-lg-1 col-xl-3 col-md-5 col-sm-3 col-3 ml-auto">
+        <div class="input-group input-group-sm col-12">
+          <div class="input-group-prepend"> 
+            <span class="input-group-text"><i class="fas fa-search"></i></span>             
+          </div>
+            <input class="form-control" placeholder="Search" type="text">
+        </div>
+      </form>
+    <!-- Sign Up/In -->
+    <ul class="navbar-nav right mr-auto ">
+      <li class="nav-item">
+        <button type="button" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#modal-form"><span><img class="icon-plus" src={% static 'main/img/icons/add.svg' %} alt="Design"></span> Submit a tutorial</button>
+      </li>
+      <li class="nav-item">
+        <button type="button" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#signin-form"> Sign Up / Sign In</button>
+      </li>
+    </ul>	
+    <ul class="navbar-nav right-small">
+      <li class="nav-item mr-2">
+        <button type="button" class="btn btn-info btn-round btn-sm" data-toggle="modal" data-target="#signin-form">Sign In</button>
+      </li>
+    </ul>	
+  </div>
+</nav>
+
+{% include 'main/partials/signup.html' %}
+
+        

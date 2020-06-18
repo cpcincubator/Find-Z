@@ -1,0 +1,27 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block meta %}
+    <title>Home | FindZ</title>
+{% endblock %}
+
+{% block body %}
+    {% include 'main/partials/navbar.html' %}
+    <div class="wrapper py-5">
+        <div class="container px-5"> 
+                <div class="col-xs-12 text-center"> 
+                    <h1 class="display-3">Find the Best Programming Courses &amp; Tutorials</h1>    
+                    <input class="form-control navbar-search-input js-navbar-search-input nav-input js-filter-topics" type="text" placeholder="Search for the language you want to learn: Python, Javascript,...">
+                </div> 
+        </div> 
+    </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+$(document).ready(function() {
+
+
+});
+</script>
+{% endblock %}
