@@ -6,9 +6,15 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
-django = "*"
-djangorestframework = "*"
-cloudinary = "*"
+asgiref = "==3.2.7"
+certifi = "==2020.4.5.2"
+cloudinary = "==1.21.1"
+djangorestframework = "==3.11.0"
+pytz = "==2020.1"
+six = "==1.15.0"
+sqlparse = "==0.3.1"
+urllib3 = "==1.25.9"
+Django = "==3.0.7"
 
 [requires]
 python_version = "3.8"
