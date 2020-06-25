@@ -66,7 +66,14 @@ WSGI_APPLICATION = 'findZ.wsgi.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 DATABASES = {
-    'default': DB_CONFIG
+    'default': {
+        'ENGINE' : 'django.db.backends.mysql',
+        'NAME' : 'findZ$mysite',
+        'USER' : 'findZ',
+        'PASSWORD' : '[haha7898!?]',
+        'HOST' : 'findZ.mysql.pythonanywhere-services.com',
+        'PORT' : '3306',
+    }
 }
 
 # Password validation
