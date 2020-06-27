@@ -1,0 +1,101 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block meta %}
+    <title>Admin Panel Login - Find-Z</title>
+{% endblock %}
+
+{% block styles %}
+    <style type="text/css">
+        body {
+            background-color: #DADADA;
+        }
+
+        body > .grid {
+            height: 100%;
+        }
+
+    </style>
+{% endblock %}
+
+{% block body %}
+    <h1>{{ msg }}</h1>
+    <div class="container mt-8 pb-3">
+        <div class="row justify-content-center">
+          <div class="col-lg-5 col-md-7">
+            <div class="card bg-secondary border-0 mb-0">
+              <div class="card-body px-lg-5 py-lg-5">
+                <div class="text-center text-muted mb-4">
+                  <small>Sign in to <b class="text-danger">Admin Panel</b></small>
+                </div>
+                <form role="form" method="POST" action="{% url 'admin-login' %}">
+                    {% csrf_token %}
+                  <div class="form-group mb-3">
+                    <div class="input-group input-group-merge input-group-alternative">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="ni ni-email-83"></i></span>
+                      </div>
+                      <input class="form-control" type="text" name="username" placeholder="Username">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="input-group input-group-merge input-group-alternative">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                      </div>
+                      <input class="form-control" type="password" name="password" placeholder="Password">
+                    </div>
+                  </div>
+                  <div class="text-center">
+                    <button type="submit" class="btn btn-primary my-2 login">Sign in</button>
+                  </div>
+                     <div class="form-group">
+                        <div class="alert alert-danger" id="ins_error" style="display:none">
+                        </div>
+                    </div> 
+                    {% if messages %}
+                        {% for message in messages %}
+                    <div class="form-group">
+                        <div class="alert alert-danger" id="ins_error2">
+                            {{ message }}
+                        </div>
+                    </div>                           
+                        {% endfor %}
+                    {% endif %}
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        $(document).ready(function () {
+            $(document).on("click",".login",function(e) {
+                var username = $("input[name='username']").val().trim();
+                var password = $("input[name='password']").val().trim();
+
+                if ( username == ""){
+                    $("#ins_error").text("Username can't be blank!");
+                    $("#ins_error").show();
+                    $("button[type='submit']").prop('disabled', true);
+                }
+                else if(password == ""){
+                    $("#ins_error").text("Password can't be blank!")
+                    $("#ins_error").show();
+                    $("button[type='submit']").prop('disabled', true);
+                }else{
+                    $("#ins_error").hide()
+                    $("button[type='submit']").prop('disabled', false);
+                }
+            });
+            $(document.body).click( function() {
+                $("#ins_error").hide();
+                $("#ins_error2").hide();
+                $("button[type='submit']").prop('disabled', false);
+            });
+        });
+    </script>
+{% endblock %}    
