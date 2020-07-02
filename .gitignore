@@ -2,6 +2,7 @@
 .vscode
 env.py
 .env
+venv
 db.sqlite3
 *.pyc
 *.*.pyc
