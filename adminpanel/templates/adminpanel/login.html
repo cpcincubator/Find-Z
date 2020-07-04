@@ -1,4 +1,4 @@
-{% extends 'main/base.html' %}
+{% extends 'adminpanel/base.html' %}
 {% load static %}
 
 {% block meta %}
@@ -11,16 +11,12 @@
             background-color: #DADADA;
         }
 
-        body > .grid {
-            height: 100%;
-        }
 
     </style>
 {% endblock %}
 
 {% block body %}
-    <h1>{{ msg }}</h1>
-    <div class="container mt-8 pb-3">
+    <div class="container pt-9">
         <div class="row justify-content-center">
           <div class="col-lg-5 col-md-7">
             <div class="card bg-secondary border-0 mb-0">
@@ -33,7 +29,7 @@
                   <div class="form-group mb-3">
                     <div class="input-group input-group-merge input-group-alternative">
                       <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="ni ni-email-83"></i></span>
+                        <span class="input-group-text"><i class="far fa-user"></i></span>
                       </div>
                       <input class="form-control" type="text" name="username" placeholder="Username">
                     </div>

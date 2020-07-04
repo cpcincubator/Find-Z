@@ -1,0 +1,588 @@
+{% extends 'adminpanel/base.html' %}
+{% load static %}
+
+{% block meta %}
+    <title>AdminPanel Users | Find-Z</title>
+{% endblock %}
+
+{% block styles %}
+  <!-- Page plugins -->
+  <link rel="stylesheet" href="{% static 'adminpanel/vendor/datatables.net-bs4/css/dataTables.bootstrap4.min.css' %}">
+  <link rel="stylesheet" href="{% static 'adminpanel/vendor/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css' %}">
+  <link rel="stylesheet" href="{% static 'adminpanel/vendor/datatables.net-select-bs4/css/select.bootstrap4.min.css' %}">
+  <link rel="stylesheet" href="{% static 'adminpanel/vendor/jquery-ui/jquery-ui.css' %}">
+{% endblock %}
+
+{% block body %}
+  
+  {% include 'adminpanel/partials/sidebar.html' %}
+  <!-- Main content -->
+  <div class="main-content" id="panel">
+  {% include 'adminpanel/partials/navbar.html' %}
+    <!-- Header -->
+    <div class="header pb-6">
+      <div class="container-fluid">
+        <div class="header-body">
+          <div class="row align-items-center py-4">
+            <div class="col-lg-6 col-7">
+              <h6 class="h2 d-inline-block mb-0">Users</h6>
+              <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                <ol class="breadcrumb breadcrumb-links">
+                  <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+                  <li class="breadcrumb-item"><a href="#">AdminPanel</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Users</li>
+                </ol>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Add User Modal-->
+    <div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+        <div class="modal-content">
+          <div class="modal-body ui-front p-0">
+            <div class="card bg-secondary shadow border-0 mb-0">
+              <div class="card-header bg-white pb-2">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">×</span>
+                </button>
+                <div class="text-muted mb-1 text-center">
+                  <small class="heading">Create User</small>
+                </div>
+              </div>
+              <div class="card-body px-lg-5 py-lg-4">
+                <div class="text-center text-muted mb-3">
+                  <small class="text-red">Create an user with credentials</small>
+                </div>
+                <form role="form" class="addUser">
+                  <div class="form-group mb-3">
+                    <div class="input-group input-group-alternative">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="far fa-user"></i></span>
+                      </div>
+                      <input class="form-control" placeholder="Username" id="username" type="text">
+                    </div>
+                  </div>
+                  <div class="form-group mb-3">
+                    <div class="input-group input-group-alternative">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="ni ni-email-83"></i></span>
+                      </div>
+                      <input class="form-control" placeholder="Email" id="email" type="email">
+                    </div>
+                  </div>
+                  <div class="form-group mb-3">
+                    <div class="input-group input-group-alternative">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                      </div>
+                      <input class="form-control" placeholder="Password" id="password1" type="password">
+                    </div>
+                  </div>
+                  <div class="form-group mb-3">
+                    <div class="input-group input-group-alternative">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                      </div>
+                      <input class="form-control" placeholder="Confirm Password" id="password2" type="password">
+                    </div>
+                  </div>
+                  
+                  <div class="text-right">
+                    <button type="button" class="btn btn-primary mb-4" id="addUserButton">Add</button>
+                  </div>
+                    <div class="form-group mt--2 mb--1">
+                      <div class="alert alert-success" id="user_success" style="display:none">
+
+                      </div>
+                      <div class="alert alert-danger" id="user_error" style="display:none">
+
+                      </div>
+                    </div>
+                </form>
+              </div>              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Edit User Modal-->
+    <div class="modal fade" id="editUserModal" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+        <div class="modal-content">
+          <div class="modal-body ui-front p-0">
+            <div class="card bg-secondary shadow border-0 mb-0">
+              <div class="card-header bg-white pb-2">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">×</span>
+                </button>
+                <div class="text-muted mb-1 text-center">
+                  <small class="heading">Edit User</small>
+                </div>
+              </div>
+              <div class="card-body px-lg-5 py-lg-4">
+                <div class="text-center text-muted mb-3">
+                  <small class="text-red">Edit an existing user</small>
+                </div>
+                <form role="form" class="editUser">
+                  <div class="form-group mb-3">
+                    <div class="input-group input-group-alternative">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="far fa-user"></i></span>
+                      </div>
+                      <input class="form-control" placeholder="Username" id="username" type="text">
+                    </div>
+                  </div>
+                  <div class="form-group mb-3">
+                    <div class="input-group input-group-alternative">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="ni ni-email-83"></i></span>
+                      </div>
+                      <input class="form-control" placeholder="Email" id="email" type="email">
+                    </div>
+                  </div>
+                  <div class="form-group mb-3">
+                    <div class="input-group input-group-alternative">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-user-shield"></i></span>
+                      </div>
+                        <select class="form-control" id="userRole">                             
+                          <option value="member">Member</option>
+                          <option value="staff">Moderator</option>
+                          <option value="admin">Admin</option>
+                        </select>
+                    </div>
+                  </div>                  
+                  <div class="text-right">
+                    <button type="button" class="btn btn-primary mb-4" id="editUserButton">Update</button>
+                  </div>
+                    <div class="form-group mt--2 mb--1">
+                      <div class="alert alert-success" id="edit_user_success" style="display:none">
+
+                      </div>
+                      <div class="alert alert-danger" id="edit_user_error" style="display:none">
+
+                      </div>
+                    </div>
+                </form>
+              </div>              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Page content -->
+    <div class="container-fluid mt--6">
+
+    <div class="row" id="upt">
+      <div class="col-md-12">
+        <div class="alert alert-success" id="upt_success" style="display:none">
+
+        </div>
+        <div class="alert alert-danger" id="upt_error" style="display:none">
+
+        </div>
+      </div>
+    </div> 
+      <!-- Table -->
+      <div class="row">
+        <div class="col">
+          <div class="card">
+            <div class="row align-items-center">
+              <div class="col-12 text-right py-4">
+                <div class="pr-4">
+                  <button type="button" class="btn btn-sm btn-neutral" data-toggle="modal" data-target="#addUserModal"><i class="ni ni-fat-add align-middle"></i>Add User</button>
+                </div>
+              </div>
+            </div>
+            <div class="table-responsive py-4">
+              <table class="table table-flush" id="user-datatable">
+                <thead class="thead-light">
+                  <tr>
+                  <tr>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tfoot>
+                  <tr>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th></th>
+                  </tr>
+                </tfoot>
+                <tbody>
+                {% for user in users %}
+                  <tr>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>
+                    {% if user.is_superuser %}
+                      <b class="text-danger">Admin</b> 
+                    {% elif user.is_staff %}
+                      <b class="text-success">Moderator</b>
+                    {% else %}
+                      Member
+                    {% endif %}
+                    </td>
+                    <td class="text-right">
+                      <div class="dropdown dropleft">
+                        <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <i class="fas fa-ellipsis-v text-black-50"></i>
+                        </a>
+                        <div class="dropdown-menu ">
+                        {% if user.is_active %}
+                          <button type="button" class="btn btn-sm btn-edit dropdown-item " data-toggle="modal" data-target="#editUserModal" id="edit-{{user.id}}"><span class="align-middle"> <i class="far fa-edit"></i></span> Edit</button>
+                        {% else %}
+                          <button type="button" class="btn btn-sm btn-approve dropdown-item" id="approve-{{user.id}}"><span class="align-middle"> <i class="fas fa-hourglass"></i></span> Approve</button>
+                        {% endif %}                                   
+                          <button type="button" class="btn btn-sm btn-delete dropdown-item" id="delete-{{user.id}}" ><span class="align-middle"> <i class="fas fa-trash"></i></span> Delete</button>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Footer -->
+        {% include 'adminpanel/partials/footer.html' %}
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block scripts %}
+
+  <!-- DataTable JS for Page Plugins -->
+  <script src="{% static 'adminpanel/vendor/datatables.net/js/jquery.dataTables.min.js' %}"></script>
+  <script src="{% static 'adminpanel/vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+  <script src="{% static 'adminpanel/vendor/datatables.net-buttons/js/dataTables.buttons.min.js' %}"></script>
+  <script src="{% static 'adminpanel/vendor/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js' %}"></script>
+  <script src="{% static 'adminpanel/vendor/datatables.net-buttons/js/buttons.html5.min.js' %}"></script>
+  <script src="{% static 'adminpanel/vendor/datatables.net-buttons/js/buttons.flash.min.js' %}"></script>
+  <script src="{% static 'adminpanel/vendor/datatables.net-select/js/dataTables.select.min.js' %}"></script>
+  <script src="{% static 'adminpanel/vendor/jquery-ui/jquery-ui.js' %}"></script>
+
+<script>
+$(document).ready(function() {
+
+  // Initialize Tutotrial DataTable
+  $("#user-datatable").DataTable({
+    "fnDrawCallback": function( oSettings ) {
+      {% for user in users %}
+      {% if not user.is_active  %}
+      if($(".btn-approve").length){
+        console.log("success")
+      }
+      $(".btn-approve").closest("td").find('i:eq(0)').removeClass("text-black-50").addClass("text-yellow");
+      {% endif %}
+      {% endfor %}
+    }
+  });
+
+
+    // Add New User Submit Button
+    $(document).on("click","#addUserButton",function(e) {
+      e.preventDefault();
+      var username = $('.addUser #username').val().trim().toLowerCase();
+      var email = $('.addUser #email').val().trim();
+      var password1 = $('.addUser #password1').val().trim();
+      var password2 = $('.addUser #password2').val().trim();
+
+      if (username == "" || email == "" || password1 == "" || password2 == "")
+        {
+          $("#user_error").text("All Fields are Required!")
+          $("#user_error").show()
+        }
+      else if (!/^[a-zA-Z0-9_\-.]+$/.test(username))
+        {
+          $("#user_error").text("Invalid Username!")
+          $("#user_error").show()
+        }
+      else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email))
+        {
+          $("#user_error").text("Invalid email address!")
+          $("#user_error").show()
+        }
+      else if (password1.length <8)
+        {
+          $("#user_error").text("Password atleast 8 characters!")
+          $("#user_error").show()
+        }
+      else if(password1!=password2)
+        {
+          $("#user_error").text("Passwords do not match!")
+          $("#user_error").show()                
+        }
+      else{   
+        $("#addUserButton").attr("disabled","disabled");
+        $("#addUserButton").html("Inserting... Please Wait.."); 
+
+        $.ajax({
+          type:'POST',
+          url:'{% url 'admin-users' %}',
+          data:{
+            csrfmiddlewaretoken:'{{ csrf_token }}',
+            action: "create-user",
+            email: email,
+            username: username,
+            password: password1,
+
+          },
+        })
+        .done(function(response){
+          if(response['error']==false){           
+            $("#user_error").hide();
+            $("#user_success").text(response['errorMessage']);
+            $("#user_success").show();  
+
+            var user_role = 'Member'
+            var action = '<div class="dropdown dropleft"><a class="btn btn-sm btn-icon-only text-light" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a><div class="dropdown-menu "><button type="button" class="btn btn-sm btn-edit dropdown-item " data-toggle="modal" data-target="#editUserModal" id="edit-'+response['id']+'"><span class="align-middle"> <i class="far fa-edit"></i></span> Edit</button><button type="button" class="btn btn-sm btn-delete dropdown-item" id="delete-'+response['id']+'" ><span class="align-middle"> <i class="fas fa-trash"></i></span> Delete</button></div></div>';                            
+            $('#user-datatable').dataTable().fnAddData([
+                username,
+                email,
+                user_role,
+                action,
+            ]); 
+            
+            $("#edit-"+response['id']).closest("td").addClass("text-right");
+          }
+          else{
+            $("#user_success").hide();
+            $("#user_error").text(response['errorMessage']);
+            $("#user_error").show();
+          }
+        })
+        .fail(function(){
+          $("#user_success").hide();
+          $("#user_error").text("Something Went Wrong!");
+          $("#user_error").show();
+        })
+        .always(function(){
+          $("#addUserButton").removeAttr("disabled");
+          $("#addUserButton").html("Add");
+        })
+      $('.addUser').trigger("reset");  
+      }
+    });
+
+
+    // Edit Button Modal 
+    $(document).on("click",".btn-edit",function() {
+      var idValue = $(this).attr("id").split("-");
+      var id = idValue[1];
+      $("#edit-"+id).closest('tr').attr("id", "user-"+id);
+      $('#edit-'+id).closest('tr').find('td:eq(0)').attr('id', 'username');
+      $('#edit-'+id).closest('tr').find('td:eq(1)').attr('id', 'email');
+      $('#edit-'+id).closest('tr').find('td:eq(2)').attr('id', 'userRole');
+
+      var username = $("#user-"+id+" #username").text();
+      var email = $("#user-"+id+" #email").text();
+      var userRole = $("#user-"+id+" #userRole").text().trim();      
+      $(".editUser #username").val(username);
+      $(".editUser #email").val(email); 
+      $(".editUser").attr('id', id);
+
+      if (userRole == "Member"){
+        $(".editUser #userRole option[value='member']").prop('selected',true);
+      }
+      else if (userRole == "Moderator"){
+        $(".editUser #userRole option[value='staff']").prop('selected',true);
+      }
+      else if (userRole == "Admin"){
+        $(".editUser #userRole option[value='admin']").prop('selected',true);
+      }    
+    });
+            
+
+    // An Existing User Update Button
+    $(document).on("click","form #editUserButton",function(e) {
+      e.preventDefault();
+      var id = $(".editUser").attr("id");      
+      var username = $('.editUser #username').val().trim().toLowerCase();
+      var email = $('.editUser #email').val().trim();
+      var userRole = $('.editUser #userRole').val();
+
+      if (username == "" || email == "" || userRole == "")
+        {
+          $("#edit_user_error").text("All Fields are Required!")
+          $("#edit_user_error").show()
+        }
+      else if (!/^[a-zA-Z0-9_\-.]+$/.test(username))
+        {
+          $("#edit_user_error").text("Invalid Username!")
+          $("#edit_user_error").show()
+        }
+      else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/.test(email))
+        {
+          $("#edit_user_error").text("Invalid email address!")
+          $("#edit_user_error").show()
+        }
+      else{                     
+        var username = $("#user-"+id+" #username").text();
+        var action = confirm("Are you sure you want to Update "+ username +"?");
+        if (action != false) 
+        {
+          $("#editUserButton").attr("disabled","disabled");
+          $("#editUserButton").html("Updating... Please Wait..");
+                        
+          $.ajax({
+            type:'POST',
+            url:'{% url 'admin-users' %}',
+            data:{
+              csrfmiddlewaretoken:'{{ csrf_token }}',
+              action: "edit-user",
+              id: id,
+              username: username,
+              email: email,
+              userRole: userRole,
+            },
+          })
+          .done(function(response){
+            if(response['error']==false){
+              $("#edit_user_error").hide();
+              $("#edit_user_success").text(response['errorMessage']);
+              $("#edit_user_success").show();
+
+              $("#user-"+id+" #username").text(username);
+              $("#user-"+id+" #email").text(email);
+              if (userRole == "member"){
+                $("#user-"+id+" #userRole").text("Member");
+              }else if(userRole == "staff"){
+                $("#user-"+id+" #userRole").html("<b class='text-success'>Moderator</b>");
+              }else if(userRole == "admin"){
+                $("#user-"+id+" #userRole").html("<b class='text-danger'>Admin</b>");
+              }                  
+            }                           
+            else{
+              $("#edit_user_success").hide();
+              $("#edit_user_error").text(response['errorMessage']);
+              $("#edit_user_error").show();
+            }
+          })
+          .fail(function(){
+            $("#edit_user_success").hide();
+            $("#edit_user_error").text("Something Went Wrong!");
+            $("#edit_user_error").show();
+          })
+          .always(function(){
+            $("#editUserButton").removeAttr("disabled");
+            $("#editUserButton").html("Update");
+          })
+        }
+      }
+    });
+
+
+
+    // Delete User 
+    $(document).on("click","#user-datatable .btn-delete",function(){
+      var idValue = $(this).attr("id").split("-");
+      var id = idValue[1];
+      $("#delete-"+id).closest('tr').attr("id", "user-"+id);
+      $('#delete-'+id).closest('tr').find('td:eq(0)').attr('id', 'username');
+      var username = $("#user-"+id+" #username").text().trim();
+
+      var action = confirm("Are you sure you want to Delete "+ username +"?");
+      if (action != false) {
+
+      $.ajax({
+        url:'{% url 'admin-users' %}',
+        type:'POST',
+        data:{
+          csrfmiddlewaretoken:'{{ csrf_token }}',
+          action: "delete-user",
+          id:id
+          },
+      })
+      .done(function(response){
+        if(response['error']==false){
+          $("#user-datatable").dataTable().fnDeleteRow($("#user-"+id));
+          $("#upt_error").hide();
+          $("#upt_success").text(response['errorMessage']);
+          $("#upt_success").show();
+        }
+        else{
+          $("#upt_success").hide();
+          $("#upt_error").text(response['errorMessage']);
+          $("#upt_error").show();
+        }
+      })
+      .fail(function(){
+        $("#upt_success").hide();
+        $("#upt_error").text("Something Went Wrong!");
+        $("#upt_error").show();
+      });
+      }
+    });
+
+
+    // Approve User
+    $(document).on("click",".btn-approve",function(){
+      var idValue = $(this).attr("id").split("-");
+      var id = idValue[1];
+      $("#approve-"+id).closest('tr').attr("id", "user-"+id);
+      $('#approve-'+id).closest('tr').find('td:eq(0)').attr('id', 'username');
+      var username = $("#user-"+id+" #username").text().trim();
+      
+      var action = confirm("Are you sure you want to Approve "+ username +"?");
+      if (action != false) {
+   
+      $.ajax({
+        url:'{% url 'admin-users' %}',
+        type:'POST',
+        data:{
+          csrfmiddlewaretoken:'{{ csrf_token }}',
+          action: "approve-user",
+          id:id
+          },
+      })
+      .done(function(response){
+        if(response['error']==false){
+          $("#approve-"+id).closest("button").replaceWith('<button type="button" class="btn btn-sm btn-edit dropdown-item " data-toggle="modal" data-target="#editUserModal" id="edit-'+id+'"><span class="align-middle"> <i class="far fa-edit"></i></span> Edit</button>')
+          $("#upt_error").hide();
+          $("#upt_success").text(response['errorMessage']);
+          $("#upt_success").show();
+        }
+        else{
+          $("#upt_success").hide();
+          $("#upt_error").text(response['errorMessage']);
+          $("#upt_error").show();
+        }
+      })
+      .fail(function(){
+        $("#upt_success").hide();
+        $("#upt_error").text("Something Went Wrong!");
+        $("#upt_error").show();
+      });
+      }
+    });
+
+
+    $(document.body).click( function() {
+      $("#upt_success").hide();
+      $("#upt_error").hide();
+      $("#user_success").hide();
+      $("#user_error").hide();
+      $("#edit_user_success").hide();
+      $("#edit_user_error").hide();
+    });
+
+
+});
+</script>
+{% endblock %}

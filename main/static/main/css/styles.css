@@ -46,6 +46,13 @@ nav .nav-link{
   font-family: 'Poppins', sans-serif !important;  
 }
 
+
+.navbar-nav .nav-link {
+    padding-top: 0;
+    padding-bottom: 0;
+    border-radius: .25rem;
+}
+
 nav .large-screen, .right-small { 
   display: none;
 }
@@ -86,11 +93,18 @@ nav .nav-icon {
 }
 nav .icon-plus {
   padding-right: .04rem;
-  width: 13px;
-  height: 13px;
-  vertical-align: middle;
+  width: 10px;
+  height: 10px;
+  vertical-align: 0 !important;
+  
 }
 .small-screen .dropdown-item{
   padding-top: 5%;
   padding-bottom: 5%;
+}
+
+/* Sign In & Sign Up */
+
+#signin-form .alert, #signup-form .alert{
+  padding: .5rem 1rem ;
 }

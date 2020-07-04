@@ -20,6 +20,21 @@ body {
   padding: .1rem 1rem;
 }
 
-#addRootModal .dropdown-menu, #addCatagoryModal .dropdown-menu {
+#addRootModal .dropdown-menu, #catagory-datatable .dropdown-menu, #tutorial-datatable .dropdown-menu {
   min-width: 6rem;
+}
+
+.addTutorial svg{
+  overflow: hidden;
+  vertical-align: middle;
+  height: 0;
+}
+
+.ql-editor.ql-blank::before {
+  color: #adb5bd !important; 
+  font-style: normal !important;
+}
+
+#addRootModal .alert, #addCatagoryModal .alert, #addTutorialModal .alert, #addUserModal .alert, #editTutorialModal .alert, #editUserModal .alert{
+  padding: .5rem 1rem ;
 }

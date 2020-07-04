@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'cloudinary',
     'rest_framework',
     'ckeditor',
+    'mathfilters',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -111,3 +112,21 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': [
+            ['Undo', 'Redo',
+             '-', 'Bold', 'Italic', 'Underline',
+             '-', 'Link', 'Unlink',
+             '-', 'Format',
+             '-', 'TextColor','BGColor',
+             '-', 'Maximize',
+            ],
+        ],
+        'height': '100%',
+        'width': '102%',
+        'toolbarCanCollapse': False,
+    },
+
+}

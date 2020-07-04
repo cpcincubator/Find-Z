@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block meta %}
-    <title>Tutorial | Find-Z</title>
+    <title>AdminPanel Tutorials | Find-Z</title>
 {% endblock %}
 
 {% block styles %}
@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="{% static 'adminpanel/vendor/datatables.net-bs4/css/dataTables.bootstrap4.min.css' %}">
   <link rel="stylesheet" href="{% static 'adminpanel/vendor/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css' %}">
   <link rel="stylesheet" href="{% static 'adminpanel/vendor/datatables.net-select-bs4/css/select.bootstrap4.min.css' %}">
+  <link rel="stylesheet" href="{% static 'adminpanel/vendor/jquery-ui/jquery-ui.css' %}">
 {% endblock %}
 
 {% block body %}
@@ -38,185 +39,12 @@
       </div>
     </div>
 
-    <!-- Add Root Modal-->
-    <div class="modal fade" id="addRootModal" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+
+    <!-- Add Tutorial Modal-->
+    <div class="modal fade" id="addTutorialModal" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-          <div class="modal-body p-0">
-            <div class="card bg-secondary shadow border-0 mb-0">
-              <div class="card-header bg-white pb-2">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">×</span>
-                </button>
-                <div class="text-muted mb-1">
-                  <small class="heading">Add Root</small>
-                </div>
-                <div class="btn-wrapper">
-                  <form role="form" class="addRoot">
-                    <div class="form-group col-8 ml-auto">
-                      <div class="input-group input-group-alternative input-group-sm">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text"><i class="ni ni-fat-add"></i></span>
-                        </div>
-                        <input class="form-control" placeholder="Type Name of Root" type="text" id="rootName">
-                      </div>
-                    </div>
-                    <div class="text-right mt--3">
-                      <button type="button" class="btn btn-outline-primary btn-round btn-sm" id="addRootButton">Add</button>
-                    </div>
-                    <div class="form-group mt-2 mb--2">
-                      <div class="alert alert-success" id="root_success" style="display:none">
-
-                      </div>
-                      <div class="alert alert-danger" id="root_error" style="display:none">
-
-                      </div>
-                    </div>
-                  </form>
-                </div>
-              </div>
-              <div class="card-body px-lg-4 pt-lg-3 pb-lg-5">
-                <div class="text-muted mb-1">
-                  <small>Roots</small>
-                </div>
-              <div class="table-responsive">
-                <table class="table align-items-center table-flush" id="root-datatable">
-                  <thead class="thead-light">
-                    <tr>
-                      <th scope="col">Name</th>
-                      <th scope="col"></th>
-                    </tr>
-                  </thead>
-                  <tbody class="list">
-                  {% for root in roots %}
-                    <tr>
-                      <th>
-                        {{ root.title }} 
-                      </th>
-                      <td class="text-right">
-                        <div class="dropdown">
-                          <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-ellipsis-v"></i>
-                          </a>
-                          <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                            <a class="dropdown-item" href="#">Edit</a>
-                            <a class="dropdown-item" href="#">Delete</a>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                  {% endfor %}
-                  </tbody>
-                </table>
-              </div>
-
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-    <!-- Add Catagory Modal-->
-    <div class="modal fade" id="addCatagoryModal" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
-        <div class="modal-content">
-          <div class="modal-body p-0">
-            <div class="card bg-secondary shadow border-0 mb-0">
-              <div class="card-header bg-white pb-2">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">×</span>
-                </button>
-                <div class="text-muted mb-1">
-                  <small class="heading">Add Catagory</small>
-                </div>
-                <div class="btn-wrapper">
-                  <form role="form" class="addCatagory">
-                    <div class="row px-3">
-                      <div class="col-4 form-group ml-auto">
-                        <select class="form-control form-control-sm" data-toggle="select" id="selectRoot">
-                        {% for root in roots %}
-                          <option value="{{ root.id }}">{{ root.title }}</option>
-                        {% endfor %} 
-                        </select>
-                      </div>
-                      <div class="form-group col-6 ml-auto">
-                        <div class="input-group input-group-alternative input-group-sm">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="ni ni-fat-add"></i></span>
-                          </div>
-                          <input class="form-control" placeholder="Name of Catagory" type="text" id="catagoryName">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="text-right mt--3">
-                      <button type="button" class="btn btn-outline-primary btn-round btn-sm" id="addCatagoryButton">Add</button>
-                    </div>
-                    <div class="form-group mt-2 mb--2">
-                      <div class="alert alert-success" id="catagory_success" style="display:none">
-
-                      </div>
-                      <div class="alert alert-danger" id="catagory_error" style="display:none">
-
-                      </div>
-                    </div>
-                  </form>
-                </div>
-              </div>
-              <div class="card-body px-lg-4 pt-lg-3 pb-lg-5">
-                <div class="text-muted mb-1">
-                  <small>Catagories</small>
-                </div>
-              <div class="table-responsive">
-                <table class="table align-items-center table-flush" id="root-datatable">
-                  <thead class="thead-light">
-                    <tr>
-                      <th scope="col">Catagory</th>
-                      <th scope="col">Root</th>
-                      <th scope="col"></th>
-                    </tr>
-                  </thead>
-                  <tbody class="list">
-                  {% for catagory in catagories %}
-                    <tr>
-                      <th>
-                        {{ catagory.title }} 
-                      </th>
-                      <th>
-                        {{ catagory.root_tutorial.title }} 
-                      </th>
-                      <td class="text-right">
-                        <div class="dropdown">
-                          <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-ellipsis-v"></i>
-                          </a>
-                          <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                            <a class="dropdown-item" href="#">Edit</a>
-                            <a class="dropdown-item" href="#">Delete</a>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                  {% endfor %}
-                  </tbody>
-                </table>
-              </div>
-
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-
-    <!-- Add Catagory Modal-->
-    <div class="modal fade" id="addTutorialModal" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
-        <div class="modal-content">
-          <div class="modal-body p-0">
+          <div class="modal-body ui-front p-0">
             <div class="card bg-secondary shadow border-0 mb-0">
               <div class="card-header bg-white pb-2">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -226,30 +54,68 @@
                   <small class="heading">Add Tutorial</small>
                 </div>
               </div>
-              <div class="card-body px-lg-5 py-lg-4">
-                <div class="text-center text-muted mb-4">
-                  <small>Or sign up with credentials</small>
-                </div>
-                <form role="form">
-                  <div class="form-group mb-3">
-                    <div class="input-group input-group-alternative">
+              <div class="card-body px-lg-4 py-lg-4">
+                <form role="form" class="addTutorial">
+                  <div class="form-group mb-2">
+                    <div class="input-group input-group-alternative input-group-sm">
                       <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="ni ni-email-83"></i></span>
+                        <span class="input-group-text"><i class="ni ni-single-copy-04"></i></span>
                       </div>
-                      <input class="form-control" placeholder="Email" type="email">
+                      <input class="form-control" placeholder="Tutorial Name" id="tutorialName" type="text">
                     </div>
                   </div>
+                  <div class="form-group mb-2">
+                    <div class="input-group input-group-alternative input-group-sm">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="ni ni-world-2"></i></span>
+                      </div>
+                      <input class="form-control" placeholder="URL" id="tutorialURL" type="text">
+                    </div>
+                  </div>
+                  <div class="form-group mb-2" id="tutorialDesc">                
+                      {{form.media }}    
+                      {{form}}           
+                  </div>
+
+                  <!-- <div class="form-row">
+                  <div class="form-group mb-2">                    
+                      <div id="tutorialDesc"><div class="input-group input-group-alternative input-group-sm"></div></div>                   
+                  </div>
+
+                    <div class="form-group col-6">
+                        <select class="form-control form-control-sm" data-toggle="select" id="select_root">
+                        {% for root in roots %}
+                          <option value="{{ root.id }}">{{ root.title }}</option>
+                        {% endfor %} 
+                        </select>
+                    </div>
+                    <div class="form-group col-6">
+                        <select class="form-control form-control-sm" data-toggle="select" id="">
+                          <option></option>                 
+                        </select>
+                    </div>
+                  </div> -->
+
                   <div class="form-group">
-                    <div class="input-group input-group-alternative">
+                    <div class="input-group input-group-alternative input-group-sm">
                       <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                        <span class="input-group-text"><i class="ni ni-ungroup"></i></span>
                       </div>
-                      <input class="form-control" placeholder="Password" type="password">
+                      <input class="form-control" placeholder="Catagory" id="select_catagory" type="text">
                     </div>
                   </div>
+                  
                   <div class="text-right">
-                    <button type="button" class="btn btn-info my-4 btn-sm">Add</button>
+                    <button type="button" class="btn btn-primary mb-4 btn-sm" id="addTutorialButton">Add</button>
                   </div>
+                    <div class="form-group mt--2 mb--1">
+                      <div class="alert alert-success" id="tutorial_success" style="display:none">
+
+                      </div>
+                      <div class="alert alert-danger" id="tutorial_error" style="display:none">
+
+                      </div>
+                    </div>
                 </form>
               </div>              
             </div>
@@ -261,6 +127,17 @@
 
     <!-- Page content -->
     <div class="container-fluid mt--6">
+
+    <div class="row" id="upt">
+      <div class="col-md-12">
+        <div class="alert alert-success" id="upt_success" style="display:none">
+
+        </div>
+        <div class="alert alert-danger" id="upt_error" style="display:none">
+
+        </div>
+      </div>
+    </div> 
       <!-- Table -->
       <div class="row">
         <div class="col">
@@ -268,8 +145,6 @@
             <div class="row align-items-center">
               <div class="col-12 text-right py-4">
                 <div class="pr-4">
-                  <button type="button" class="btn btn-sm btn-neutral" data-toggle="modal" data-target="#addRootModal"><i class="ni ni-fat-add align-middle"></i>Add Root</button>
-                  <button type="button" class="btn btn-sm btn-neutral" data-toggle="modal" data-target="#addCatagoryModal"><i class="ni ni-fat-add align-middle"></i>Add Catagory</button>
                   <button type="button" class="btn btn-sm btn-neutral" data-toggle="modal" data-target="#addTutorialModal"><i class="ni ni-fat-add align-middle"></i>Add Tutorial</button>
                 </div>
               </div>
@@ -303,17 +178,17 @@
                     <td>{{ tutorial.title }}</td>
                     <td>{{ tutorial.type }}</td>
                     <td>{{ tutorial.author }}</td>
-                    <td>{{ tutorial.catagory_tutorial }}</td>
-                    <td>{{ tutorial.root_tutorial }}</td>
+                    <td>{{ tutorial.catagory.title }}</td>
+                    <td>{{ tutorial.catagory.root.title }}</td>
                     <td class="text-right">
                       <div class="dropdown">
                         <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <i class="fas fa-ellipsis-v"></i>
+                          <i class="fas fa-ellipsis-v text-black-50"></i>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                          <a class="dropdown-item" href="#">Action</a>
-                          <a class="dropdown-item" href="#">Another action</a>
-                          <a class="dropdown-item" href="#">Something else here</a>
+                          <button type="button" class="btn btn-sm btn-edit dropdown-item " data-toggle="modal" data-target="#editTutorialModal" id="edit-{{tutorial.id}}"><span class="align-middle"> <i class="far fa-edit "></i></span> Edit</button>
+                                                            
+                          <button type="button" class="btn btn-sm btn-delete dropdown-item" id="delete-{{tutorial.id}}" ><span class="align-middle"> <i class="fas fa-trash "></i></span> Delete</button>
                         </div>
                       </div>
                     </td>
@@ -342,114 +217,166 @@
   <script src="{% static 'adminpanel/vendor/datatables.net-buttons/js/buttons.html5.min.js' %}"></script>
   <script src="{% static 'adminpanel/vendor/datatables.net-buttons/js/buttons.flash.min.js' %}"></script>
   <script src="{% static 'adminpanel/vendor/datatables.net-select/js/dataTables.select.min.js' %}"></script>
+  <script src="{% static 'adminpanel/vendor/jquery-ui/jquery-ui.js' %}"></script>
 
 <script>
 $(document).ready(function() {
+
+  // Initialize Tutotrial DataTable
   $("#tutorial-datatable").DataTable();
 
-    // Add New Root Submit Button
-    $(document).on("click","#addRootButton",function(e) {
-      e.preventDefault();
-      var rootName = $('#rootName').val().trim();
-                
-    if (rootName == "")
-      {
-    $("#root_error").text("Fields are Required!")
-    $("#root_error").show()
-      }
-    else
-      {   
-        $("#addRootButton").attr("disabled","disabled");
-        $("#addRootButton").html("Inserting... Please Wait.."); 
+
+    // Tutorial Form Root On Change Catagory
+
+    /* $("#select_root").change(function() {
+      var optionSelected = $(this).find("option:selected");
+      var valueSelected  = optionSelected.val();
 
         $.ajax({
           type:'POST',
           url:'{% url 'admin-tutorials' %}',
           data:{
             csrfmiddlewaretoken:'{{ csrf_token }}',
-            action: "create-root",
-            rootName: rootName,
+            action: "get-catagory",
+            rootID: valueSelected,
           },
-        })
-        .done(function(response){
-          if(response['error']==false){
-            $("#root_error").hide();
-            $("#root_success").text(response['errorMessage']);
-            $("#root_success").show();  
+          success: function(catagory){
+            $("#select_catagory option").remove();
+            for (var i = catagory.length - 1; i >= 0; i--) {
+                $("#select_catagory").append('<option>'+ catagory[i].['id'] +'</option>');
+            }
+          }
+        });   
+    }); */
 
-          }
-          else{
-            $("#root_success").hide();
-            $("#root_error").text(response['errorMessage']);
-            $("#root_error").show();
-          }
-        })
-        .fail(function(){
-          $("#root_success").hide();
-          $("#root_error").text("Something Went Wrong!");
-          $("#root_error").show();
-        })
-        .always(function(){
-          $("#addRootButton").removeAttr("disabled");
-          $("#addRootButton").html("Add");
-        })
-      $('.addRoot').trigger("reset");  
-      }
+    // Catagory Search
+    $("#select_catagory").autocomplete({
+      source: "{% url 'admin-tutorials' %}"
     });
 
 
-    // Add New Catagory Submit Button
-    $(document).on("click","#addCatagoryButton",function(e) {
+    // Add New Tutorial Submit Button
+    $(document).on("click","#addTutorialButton",function(e) {
       e.preventDefault();
-      var catagoryName = $("#catagoryName").val().trim();
-      var rootID = $('#selectRoot').val();
-                
-    if (catagoryName == "")
+      var tutorialName = $("#tutorialName").val();
+      var tutorialURL = $("#tutorialURL").val().trim();
+      var tutorialDesc = $("#id_desc").val();
+      var catagory = $('#select_catagory').val().trim();
+
+    if (!/^[a-zA-Z" "\-]+$/.test(tutorialName))
       {
-    $("#catagory_error").text("All Fields are Required!")
-    $("#catagory_error").show()
+    $("#tutorial_error").text("Invalid Tutorial name!")
+    $("#tutorial_error").show()
+      }
+    else if (tutorialURL == "")
+      {
+    $("#tutorial_error").text("Tutorial URL is required!")
+    $("#tutorial_error").show()
+      }
+    else if (catagory == "")
+      {
+    $("#tutorial_error").text("Catagory is required!")
+    $("#tutorial_error").show()
       }
     else
       {   
-        $("#addCatagoryButton").attr("disabled","disabled");
-        $("#addCatagoryButton").html("Inserting... Please Wait.."); 
+        $("#addTutorialButton").attr("disabled","disabled");
+        $("#addTutorialButton").html("Inserting... Please Wait.."); 
 
         $.ajax({
           type:'POST',
           url:'{% url 'admin-tutorials' %}',
           data:{
             csrfmiddlewaretoken:'{{ csrf_token }}',
-            action: "create-catagory",
-            rootID: rootID,
-            catagoryName: catagoryName,
+            action: "create-tutorial",
+            catagory: catagory,
+            tutorialName: tutorialName,
+            tutorialURL: tutorialURL,
+            tutorialDesc: tutorialDesc,
           },
         })
         .done(function(response){
           if(response['error']==false){
-            $("#catagory_error").hide();
-            $("#catagory_success").text(response['errorMessage']);
-            $("#catagory_success").show();  
-
+            $("#tutorial_error").hide();
+            $("#tutorial_success").text(response['errorMessage']);
+            $("#tutorial_success").show(); 
+            
+            var type = response['type'];
+            var author = 'None'
+            var rootName = response['rootName'];
+            var catagoryName = response['catagoryName'];
+            var action = '<div class="dropdown dropleft"><a class="btn btn-sm btn-icon-only text-light" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a><div class="dropdown-menu "><button type="button" class="btn btn-sm btn-edit dropdown-item " data-toggle="modal" data-target="#editTutorialModal" id="edit-'+response['id']+'"><span class="align-middle"> <i class="far fa-edit"></i></span> Edit</button><button type="button" class="btn btn-sm btn-delete dropdown-item" id="delete-'+response['id']+'" ><span class="align-middle"> <i class="fas fa-trash"></i></span> Delete</button></div></div>';                            
+            $('#tutorial-datatable').dataTable().fnAddData([
+                tutorialName,
+                type,
+                author,
+                catagoryName,
+                rootName,
+                action,
+            ]); 
+            
+            $("#edit-"+response['id']).closest("td").addClass("text-right");            
           }
           else{
-            $("#catagory_success").hide();
-            $("#catagory_error").text(response['errorMessage']);
-            $("#catagory_error").show();
+            $("#tutorial_success").hide();
+            $("#tutorial_error").text(response['errorMessage']);
+            $("#tutorial_error").show();
           }
         })
         .fail(function(){
-          $("#catagory_success").hide();
-          $("#catagory_error").text("Something Went Wrong!");
-          $("#catagory_error").show();
+          $("#tutorial_success").hide();
+          $("#tutorial_error").text("Something Went Wrong!");
+          $("#tutorial_error").show();
         })
         .always(function(){
-          $("#addCatagoryButton").removeAttr("disabled");
-          $("#addCatagoryButton").html("Add");
+          $("#addTutorialButton").removeAttr("disabled");
+          $("#addTutorialButton").html("Add");
         })
-      $('.addCatagory').trigger("reset");  
+      $('.addTutorial').trigger("reset");  
       }
     });
 
+
+    // Delete Catagory 
+    $(document).on("click","#tutorial-datatable .btn-delete",function(){
+      var idValue = $(this).attr("id").split("-");
+      var id = idValue[1];
+      $("#delete-"+id).closest('tr').attr("id", "tutorial-"+id);
+      $('#delete-'+id).closest('tr').find('td:eq(0)').attr('id', 'tutorialName');
+      var tutorialName = $("#tutorial-"+id+" #tutorialName").text().trim();
+
+      var action = confirm("Are you sure you want to Delete "+ tutorialName +"?");
+      if (action != false) {
+
+      $.ajax({
+        url:'{% url 'admin-tutorials' %}',
+        type:'POST',
+        data:{
+          csrfmiddlewaretoken:'{{ csrf_token }}',
+          action: "delete-tutorial",
+          id:id
+          },
+      })
+      .done(function(response){
+        if(response['error']==false){
+          $("#tutorial-datatable").dataTable().fnDeleteRow($("#tutorial-"+id));
+          $("#upt_error").hide();
+          $("#upt_success").text(response['errorMessage']);
+          $("#upt_success").show();
+        }
+        else{
+          $("#upt_success").hide();
+          $("#upt_error").text(response['errorMessage']);
+          $("#upt_error").show();
+        }
+      })
+      .fail(function(){
+        $("#upt_success").hide();
+        $("#upt_error").text("Something Went Wrong!");
+        $("#upt_error").show();
+      });
+      }
+    });
 
 
     $(document.body).click( function() {
@@ -459,8 +386,9 @@ $(document).ready(function() {
       $("#root_error").hide();
       $("#catagory_success").hide();
       $("#catagory_error").hide();
+      $("#tutorial_success").hide();
+      $("#tutorial_error").hide();
     });
-
 
 
 });
