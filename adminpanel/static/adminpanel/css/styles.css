@@ -1,0 +1,25 @@
+body {
+  font-family: 'Poppins', sans-serif !important;
+  width: 100%;
+  margin: 0px;
+  padding: 0px;
+  overflow-x: hidden; 
+}
+
+
+#addRootModal .ml-auto, #addCatagoryModal .ml-auto{
+  padding-left: 0%;
+  padding-right: 0%;
+}
+
+#addRootModal tbody th,#addRootModal td, #addCatagoryModal tbody th, #addCatagoryModal td{
+  padding: 0rem 1rem;
+}
+
+#addRootModal .dropdown-item, #addCatagoryModal .dropdown-item{
+  padding: .1rem 1rem;
+}
+
+#addRootModal .dropdown-menu, #addCatagoryModal .dropdown-menu {
+  min-width: 6rem;
+}

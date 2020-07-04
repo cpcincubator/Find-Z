@@ -1,0 +1,56 @@
+{% load static %}
+
+  <!-- Sidenav -->
+  <nav class="sidenav navbar navbar-vertical fixed-left navbar-expand-xs navbar-light bg-white" id="sidenav-main">
+    <div class="scrollbar-inner">
+      <!-- Brand -->
+      <div class="sidenav-header d-flex align-items-center">
+        <a class="navbar-brand" href="{% url 'adminpanel' %}">
+          <img src="{% static 'adminpanel/img/brand/blue.png' %}" class="navbar-brand-img" alt="...">
+        </a>
+        <div class="ml-auto">
+          <!-- Sidenav toggler -->
+          <div class="sidenav-toggler d-none d-xl-block" data-action="sidenav-unpin" data-target="#sidenav-main">
+            <div class="sidenav-toggler-inner">
+              <i class="sidenav-toggler-line"></i>
+              <i class="sidenav-toggler-line"></i>
+              <i class="sidenav-toggler-line"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="navbar-inner">
+        <!-- Collapse -->
+        <div class="collapse navbar-collapse" id="sidenav-collapse-main">
+          <!-- Nav items -->
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'adminpanel' %}">
+                <i class="ni ni-shop text-primary"></i>
+                <span class="nav-link-text">Dashboard</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'admin-tutorials' %}">
+                <i class="ni ni-single-copy-04 text-pink"></i>
+                <span class="nav-link-text">Tutorials</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'adminpanel' %}">
+                <i class="ni ni-single-02 text-green"></i>
+                <span class="nav-link-text">Users</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'adminpanel' %}">
+                <i class="ni ni-ui-04 text-info"></i>
+                <span class="nav-link-text">Settings</span>
+              </a>
+            </li>
+          </ul>
+
+        </div>
+      </div>
+    </div>
+  </nav>
