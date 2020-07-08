@@ -1,9 +1,14 @@
+@font-face {font-family: "Proxima Nova A"; src: url("../fonts/Proxima-Nova.eot"); src: url("../fonts/Proxima-Nova.eot") format("embedded-opentype"), url("../fonts/Proxima-Nova.woff2") format("woff2"), url("../fonts/Proxima-Nova.woff") format("woff"), url("../fonts/Proxima-Nova.ttf") format("truetype"), url("../fonts/Proxima-Nova.svg") format("svg"); 
+}
+
 body {
-  font-family: 'Poppins', sans-serif !important;
+  /* font-family: 'Poppins', sans-serif !important; */
+  font-family: "Proxima Nova A";
   width: 100%;
   margin: 0px;
   padding: 0px;
   overflow-x: hidden; 
+  background-color: #eeeef2;
 }
 
 
@@ -11,7 +16,8 @@ body {
 
 .bg-primary{
   /* background-color: #60a3bc !important; */
-  background-color: #2bcbba !important;
+  /* background-color: #2bcbba !important; */
+  background-color: #63cdda !important;
   padding: 0% !important;
 }
 
@@ -30,20 +36,17 @@ nav [class*=btn-outline-] {
 nav .btn-outline-info {
   color: #525f7f;
   text-transform: none;
-  font-weight: normal;
-  font-size: .75em;
+  font-weight: bold;
+  font-size: .8em;
 }
 
-nav .btn-info , .btn-info:hover{
-  text-transform: none;
-  color: #525f7f;
-}
+
 
 nav .nav-link{
   padding-left: 0% !important;
   padding-right: 0% !important;
   font-size: 1.04em !important; 
-  font-family: 'Poppins', sans-serif !important;  
+  font-family: 'Proxima Nova A' !important;  
 }
 
 
@@ -98,13 +101,160 @@ nav .icon-plus {
   vertical-align: 0 !important;
   
 }
-.small-screen .dropdown-item{
+.navbar-nav .dropdown-item{
   padding-top: 5%;
   padding-bottom: 5%;
 }
+
+
 
 /* Sign In & Sign Up */
 
 #signin-form .alert, #signup-form .alert{
   padding: .5rem 1rem ;
+}
+
+#signup-form .col-6{
+  padding-left: 0%;
+  padding-right: 0%;
+}
+
+/* Catagory Page Card Body */
+
+#catagory-box .card{
+  background-color: #fff;
+  border: 1px solid #d9d9e0;
+  border-radius: 3px;
+}
+
+#catagory-box .card-body{
+  padding: 1rem ;
+}
+
+#catagory-box .card-title {
+  margin-bottom: 0;
+  font-weight: 600;
+}
+
+
+/* Tutorial Page Card Body */
+#tutorial-box .card{
+  background-color: #fff;
+  border: 0;
+  border-radius: 1px;
+}
+
+#tutorial-box .card-title {
+  margin-bottom: 0;
+  font-weight: 600;
+}
+
+
+/* Tutorial Page Card Body */
+#root-box .card{
+  background-color: #fff;
+  border: 0;
+  border-radius: 1px;
+}
+#root-box .card-title {
+  margin-bottom: 0;
+  font-weight: 600;
+}
+
+
+
+/*--------------------------------------------------------------
+# 404 not found
+--------------------------------------------------------------*/
+
+#notfound {
+  position: relative;
+  height: 100vh;
+}
+
+#notfound .notfound {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+}
+
+.notfound {
+  max-width: 520px;
+  width: 100%;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.notfound .notfound-404 {
+  position: relative;
+  height: 240px;
+}
+
+.notfound .notfound-404 h1 {
+  font-family: 'Montserrat', sans-serif;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  font-size: 252px;
+  font-weight: 900;
+  margin: 0px;
+  color: #262626;
+  text-transform: uppercase;
+  letter-spacing: -40px;
+  margin-left: -20px;
+}
+
+.notfound .notfound-404 h1>span {
+  text-shadow: -8px 0px 0px #fff;
+}
+
+.notfound .notfound-404 h3 {
+  font-family: 'Cabin', sans-serif;
+  position: relative;
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #262626;
+  margin: 0px;
+  letter-spacing: 3px;
+  padding-left: 6px;
+}
+
+.notfound h2 {
+  font-family: 'Cabin', sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: #000;
+  margin-top: 0px;
+  margin-bottom: 25px;
+}
+
+@media only screen and (max-width: 767px) {
+  .notfound .notfound-404 {
+    height: 200px;
+  }
+  .notfound .notfound-404 h1 {
+    font-size: 200px;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .notfound .notfound-404 {
+    height: 162px;
+  }
+  .notfound .notfound-404 h1 {
+    font-size: 162px;
+    height: 150px;
+    line-height: 162px;
+  }
+  .notfound h2 {
+    font-size: 16px;
+  }
 }

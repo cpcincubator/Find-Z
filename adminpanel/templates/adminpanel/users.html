@@ -557,6 +557,7 @@ $(document).ready(function() {
           $("#upt_error").hide();
           $("#upt_success").text(response['errorMessage']);
           $("#upt_success").show();
+          $("#approve-"+id).closest("td").find('i:eq(0)').removeClass("text-yellow").addClass("text-black-50");
         }
         else{
           $("#upt_success").hide();

@@ -13,19 +13,48 @@ from adminpanel.form import *
 
 class Index(View):
   def get(self, request):
-    return render(request, 'main/index.html')
+    all_root = Root.objects.all()
+
+    context ={
+      'roots': all_root
+    }
+    return render(request, 'main/index.html', context)
 
 
-class Academic(View):
-  def get(self, request):
-    return render(request, 'main/academic.html')
+class Catagories(View):
+  def get(self, request, root_slug):
+    root = Root.objects.filter(slug = root_slug)
+
+    if root.exists():
+      root = root.first()
+      root_id = root.id
+      all_catagory = Catagory.objects.filter(root_id = root_id)
+    else:
+      return render(request, 'main/404.html')
+
+    context ={
+      'root': root,
+      'catagories': all_catagory
+    }
+    return render(request, 'main/catagories.html', context)
 
 
-class Programming(View):
-  def get(self, request):
-    return render(request, 'main/programming.html')
+class Tutorials(View):
+  def get(self, request, root_slug, catagory_slug):
+    catagory = Catagory.objects.filter(slug = catagory_slug)
 
+    if catagory.exists():
+      catagory = catagory.first()
+      catagory_id = catagory.id
+      all_tutorial = Tutorial.objects.filter(catagory_id = catagory_id)
+    else:
+      return render(request, 'main/404.html')
 
-class Devops(View):
-  def get(self, request):
-    return render(request, 'main/devops.html')
+    context ={
+      'catagory': catagory,
+      'tutorials': all_tutorial
+    }
+    return render(request, 'main/tutorials.html', context)
+
+def not_found(request):
+  return render(request, 'main/404.html')

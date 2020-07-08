@@ -15,11 +15,12 @@
         2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path, include, re_path
+from main.views import not_found
 
 urlpatterns = [
     path('admin/', include('adminpanel.urls')),
     path('', include('main.urls')),
     path('user/', include('userpanel.urls')),
 
-    re_path('.*', include('main.urls')),
+    re_path('.*', not_found, name='not-found'),
 ]

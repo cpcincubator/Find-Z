@@ -5,19 +5,138 @@
     <title>Home | FindZ</title>
 {% endblock %}
 
+{% block styles %}
+<style>
+body {background-color: #fff;}
+</style>
+{% endblock  %}
+
 {% block body %}
-    {% include 'main/partials/navbar.html' %}
+<nav class="navbar navbar-expand navbar-light bg-primary">
+  <div class="container-fluid de-flex py-2">
+    <!-- Sign Up/In -->
+      <div class="align-self-center ml-auto">
+      <ul class="navbar-nav right mr-3">
+        <li class="nav-item align-self-center">
+          <button type="button" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#modal-form"><span><img class="icon-plus" src={% static 'main/img/icons/add.svg' %} alt="Design"></span> Submit a tutorial</button>
+        </li>
+      {% if user.is_authenticated %} 
+        <li class="nav-item dropdown">            
+          <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <div class="media align-items-center">
+              <span class="avatar avatar-sm rounded-circle">
+                <img alt="Image placeholder" src="{% static 'adminpanel/img/theme/admin-user.jpg' %}">
+              </span>
+              <div class="media-body ml-2 d-none d-lg-block">
+                <span class="mb-0 text-sm  font-weight-bold">{{user.username}}</span>
+              </div>
+            </div>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right">
+            <div class="dropdown-header noti-title">
+              <h6 class="text-overflow m-0">Welcome!</h6>
+            </div>
+            <a href="#!" class="dropdown-item">
+              <i class="ni ni-single-02"></i>
+              <span>My profile</span>
+            </a>
+            <a href="#!" class="dropdown-item">
+              <i class="ni ni-settings-gear-65"></i>
+              <span>Settings</span>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a href="{% url 'logout' %}" class="dropdown-item">
+              <i class="ni ni-user-run"></i>
+              <span>Logout</span>
+            </a>
+          </div>          
+        </li>
+      {% else %}
+        <li class="nav-item align-self-center">
+          <button type="button" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#signin-form"> Sign Up / Sign In</button>
+        </li>
+      {% endif %}  
+      </ul>	
+      </div>
+
+      <ul class="navbar-nav right-small">
+      {% if user.is_authenticated %} 
+        <li class="nav-item dropdown mr-2">            
+          <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <div class="media align-items-center">
+              <span class="avatar avatar-sm rounded-circle">
+                <img alt="Image placeholder" src="{% static 'adminpanel/img/theme/admin-user.jpg' %}">
+              </span>
+              <div class="media-body ml-2 d-none d-lg-block">
+                <span class="mb-0 text-sm  font-weight-bold">{{user.username}}</span>
+              </div>
+            </div>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right dropdown-menu-sm">
+            <div class="dropdown-header noti-title">
+              <h6 class="text-overflow m-0">Welcome!</h6>
+            </div>
+            <a href="#!" class="dropdown-item">
+              <i class="ni ni-single-02"></i>
+              <span>My profile</span>
+            </a>
+            <a href="#!" class="dropdown-item">
+              <i class="ni ni-settings-gear-65"></i>
+              <span>Settings</span>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a href="{% url 'logout' %}" class="dropdown-item">
+              <i class="ni ni-user-run"></i>
+              <span>Logout</span>
+            </a>
+          </div>          
+        </li>
+      {% else %}
+        <li class="nav-item mr-2">
+          <button type="button" class="btn btn-info btn-round btn-sm" data-toggle="modal" data-target="#signin-form">Sign In</button>
+        </li>
+      {% endif %} 
+      </ul>	
+
+  </div>
+</nav>
+{% include 'main/partials/signup.html' %}
     <div class="wrapper py-5">
-        <div class="container px-7"> 
-                <div class="col-xs-12 text-center"> 
-                    <h2>Find the Best Programming Courses &amp; Tutorials</h2>    
-                    <input class="form-control navbar-search-input js-navbar-search-input nav-input js-filter-topics" type="text" placeholder="Search for the language you want to learn: Python, Javascript,...">
-                </div> 
+        <div class="container"> 
+            <div class="text-center mx-lg-9 my-4"> 
+                <h1><i class="fas fa-greater-than-equal text-cyan"></i> <b>FIND-Z</b></h1>
+                <h5>Find and compare <b>online courses</b> from multiple e-learning platforms</h5> 
+                <div class="d-flex justify-content-center">
+                    <input class="form-control form-control-alternative col-11" type="text" placeholder="Find a course...">
+                </div>
+            </div> 
+            <div class="row py-4" id="root-box">
+            {% for root in roots %}
+            <div class="col-lg-3">
+                <div class="card my-3" >
+                    <div class="card-body">
+                        <a class="card-link" href={% url 'catagories' root_slug=root.slug %}>
+                        <div class="d-flex">
+                            <div class="mr-2"><img src={% static 'main/img/theme/react.jpg' %} alt="..." class="avatar avatar-xs rounded"></div>
+                            <h6 class="card-title">{{ root.title }}<br>
+                                <small>{{ root.catagory_set.all.count }} online courses</small>
+                            </h6>                            
+                        </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            </div>
         </div> 
     </div>
 {% endblock %}
 
 {% block scripts %}
+<script src="{% static 'main/js/core/jquery.min.js' %}"></script>
+<script src="{% static 'main/js/core/popper.min.js' %}"></script>
+<script src="{% static 'main/js/core/bootstrap.min.js' %}"></script>
+<script src="{% static 'main/js/argon-design-system.min.js' %}"></script> 
 <script>
 $(document).ready(function() {
 
