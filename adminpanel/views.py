@@ -53,7 +53,7 @@ class StaffRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
 
 
 # Home Page
-class Index(AdminRequiredMixin, StaffRequiredMixin, View):
+class Index(AdminRequiredMixin and StaffRequiredMixin, View):
     def get(self, request):
         all_root = Root.objects.all().count()
         all_catagory = Catagory.objects.all().count()
@@ -77,7 +77,7 @@ class Index(AdminRequiredMixin, StaffRequiredMixin, View):
 
 
 # Catagory Page
-class Catagories(AdminRequiredMixin, StaffRequiredMixin, View):
+class Catagories(AdminRequiredMixin and StaffRequiredMixin, View):
     def get(self, request):            
         all_root = Root.objects.all()
         all_catagory = Catagory.objects.all()
@@ -203,7 +203,7 @@ class Catagories(AdminRequiredMixin, StaffRequiredMixin, View):
 
 
 # Tutorial Page
-class Tutorials(AdminRequiredMixin, StaffRequiredMixin, View):
+class Tutorials(AdminRequiredMixin and StaffRequiredMixin, View):
 
     def get(self, request):
         if 'term' in request.GET:
