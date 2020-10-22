@@ -1,112 +1,239 @@
-{% extends 'main/base.html' %}
-{% load static %}
-
-{% block meta %}
-    <title>{{ catagory.title}} | FindZ</title>
-{% endblock %}
-
-{% block body %}
-    {% include 'main/partials/navbar.html' %}
-    <div class="wrapper py-5">
-      <div class="container-fluid card mt--5">
+{% extends 'main/base.html' %} {% load static %} {% block meta %}
+<title>{{ sub_category.title}} | FindZ</title>
+{% endblock %} {% block body %} {% include 'main/partials/navbar.html' %}
+<div class="wrapper py-5">
+    <div class="container-fluid card mt--5">
         <div class="card-body d-flex flex-row mx-md-6 mx--3">
-          <div class=" align-self-center mr-4">
-            <h4 style="font-weight: 700;">{{ catagory.title }} Courses</h4>
-            <small style="font-size: .88em;">Find paid and free {{ catagory.title }} tutorials and courses.<br>
-                Choose from select topics and learn from the best instructors and institutions.</small>
-          </div>
-          <div class="ml-md-auto align-self-center"><img src={% static 'main/img/theme/react.jpg' %} alt="..." class="avatar avatar-lg rounded"></div>
+            <div class=" align-self-center mr-4">
+                <h4 style="font-weight: 700;">Resources for {{ sub_category.title }} {{ query }}</h4>
+                <small style="font-size: .88em;">Find paid and free {{ sub_category.title }} tutorials and courses.<br>
+                    Choose from select topics and learn from the best instructors and institutions.</small>
+            </div>
+            <!-- <div class="ml-md-auto align-self-center"><img style="display: block; object-fit: cover;"
+                    src="{% get_media_prefix %}{{ sub_category.avatar }}" alt="..." class="avatar avatar-lg rounded">
+            </div> -->
         </div>
-      </div>
-
-      <div class="container"> 
-        <div class="d-flex flex-row py-4" id="tutorial-box">
-          <div class="col-lg-3 col-1">
-            <div class="card my-3">
-              <div class="card-body">
-                <div class="d-flex flex-row">
-                  <div><h6>Filters</h6></div> 
-                  <div class="ml-auto"><small class="text-red" style="font-size: .6em; font-weight: 600;">Clear all filters</small></div>
-                </div>
-                <hr class="m--1">
-                <div class="my-3">
-                  <h6 style="font-size: .9em;">Type of course</h6>
-                  <div class="custom-control custom-checkbox mb-1">
-                    <input class="custom-control-input" id="free" type="checkbox">
-                    <label class="custom-control-label" for="free">
-                      <span>Free</span>
-                    </label>
-                  </div>
-                  <div class="custom-control custom-checkbox mb-3">
-                    <input class="custom-control-input" id="paid" type="checkbox">
-                    <label class="custom-control-label" for="paid">
-                      <span>Paid</span>
-                    </label>
-                  </div>
-                </div>
-                <hr class="m--1">
-                <div class="my-3">
-                  <h6 style="font-size: .9em;">Subcatagory</h6>
-                  <div class="custom-control custom-checkbox mb-1">
-                    <input class="custom-control-input" id="free1" type="checkbox">
-                    <label class="custom-control-label" for="free1">
-                      <span>Free</span>
-                    </label>
-                  </div>
-                  <div class="custom-control custom-checkbox mb-1">
-                    <input class="custom-control-input" id="paid1" type="checkbox">
-                    <label class="custom-control-label" for="paid1">
-                      <span>Paid</span>
-                    </label>
-                  </div>
-                  <div class="custom-control custom-checkbox mb-1">
-                    <input class="custom-control-input" id="free2" type="checkbox">
-                    <label class="custom-control-label" for="free2">
-                      <span>Free</span>
-                    </label>
-                  </div>
-                  <div class="custom-control custom-checkbox mb-1">
-                    <input class="custom-control-input" id="paid2" type="checkbox">
-                    <label class="custom-control-label" for="paid2">
-                      <span>Paid</span>
-                    </label>
-                  </div>
-                </div>
-              </div>
-            </div> 
-          </div>
-          <div class="col-lg-9 col-11">
-          {% for tutorial in tutorials %}            
-              <div class="card my-3" >
-                <div class="card-body">                  
-                  <div class="d-flex">
-                      <div class="mr-2"><img src={% static 'main/img/theme/react.jpg' %} alt="..." class="avatar avatar-lg rounded"></div>
-                      <div class="align-self-center">
-                        <h6 class="card-title">{{ tutorial.title }} </h6>                            
-                        <small>{{ tutorial.url }} </small>                            
-                      </div>
-                      <div class="ml-auto align-self-center mr-2">
-                        <h6 class="heading mt-2 text-green"><b> {{ tutorial.type }} </b></h6>
-                      </div>
-                      <div class="align-self-center">
-                        <div> <a href="{{ tutorial.url }}" target="_blank" role="button" class="btn btn-sm btn-primary mb-2 px-3" style="font-size: .6em;">Go to Course</a></div>
-                        <div> <a href="" role="button" class="btn btn-sm btn-outline-primary px-4" style="font-size: .6em;">See Details</a></div>
-                      </div>
-                  </div>                 
-                </div>
-              </div>            
-          {% endfor %}
-          </div>
-        </div>
-      </div> 
     </div>
-{% endblock %}
 
-{% block scripts %}
+    <div class="container">
+        <div class="d-flex flex-row py-4" id="tutorial-box">
+            {% if tutorials %}
+            <div class="col-lg-3 col-1">
+                <div class="card my-3">
+                    <div class="card-body">
+                        <div class="d-flex flex-row">
+                            <div>
+                                <h6>Filters</h6>
+                            </div>
+                            <div class="ml-auto"><small id="clear-filter" class="text-red" style="font-size: .6em; font-weight: 600; cursor: pointer">Clear all filters</small>
+                            </div>
+                        </div>
+                        <hr class="m--1">
+                        <div class="my-3">
+                            <h6 style="font-size: .9em;">Type of course</h6>
+                            <div class="custom-control custom-checkbox mb-1">
+                                <input class="custom-control-input pricing" name="free" value="free" id="free" type="checkbox">
+                                <label class="custom-control-label" for="free">
+                                    <span>Free</span>
+                                </label>
+                            </div>
+                            <div class="custom-control custom-checkbox mb-3">
+                                <input class="custom-control-input pricing" name="paid" value="paid" id="paid" type="checkbox">
+                                <label class="custom-control-label" for="paid">
+                                    <span>Paid</span>
+                                </label>
+                            </div>
+                        </div>
+                        <hr class="m--1">
+                        <div class="my-3">
+                            <h6 style="font-size: .9em;">Medium</h6>
+                            <div class="custom-control custom-checkbox mb-1">
+                                <input class="custom-control-input medium" name="video" value="video" id="video" type="checkbox">
+                                <label class="custom-control-label" for="video">
+                                    <span>Video</span>
+                                </label>
+                            </div>
+                            <div class="custom-control custom-checkbox mb-1">
+                                <input class="custom-control-input medium" name="video" value="blog" id="blog" type="checkbox">
+                                <label class="custom-control-label" for="blog">
+                                    <span>Blog</span>
+                                </label>
+                            </div>
+                            <div class="custom-control custom-checkbox mb-1">
+                                <input class="custom-control-input medium" name="video" value="blog" id="book" type="checkbox">
+                                <label class="custom-control-label" for="book">
+                                    <span>Book</span>
+                                </label>
+                            </div>
+
+
+                        </div>
+                        <hr class="m--1">
+                        <div class="my-3">
+                            <h6 style="font-size: .9em;">Level</h6>
+                            <div class="custom-control custom-checkbox mb-1">
+                                <input class="custom-control-input level" name="beginner" value="beginner" id="beginner" type="checkbox">
+                                <label class="custom-control-label" for="beginner">
+                                    <span>Beginner</span>
+                                </label>
+                            </div>
+                            <div class="custom-control custom-checkbox mb-1">
+                                <input class="custom-control-input level" name="advanced" value="advanced" id="advanced" type="checkbox">
+                                <label class="custom-control-label" for="advanced">
+                                    <span>Advanced</span>
+                                </label>
+                            </div>
+                            <div class="custom-control custom-checkbox mb-1">
+                                <input class="custom-control-input level" name="advanced" value="advanced" id="Intermediate" type="checkbox">
+                                <label class="custom-control-label" for="Intermediate">
+                                    <span>Intermediate</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-9 col-11">
+                <div id="tutorials-wrapper">
+                    {% for tutorial in tutorials %}
+                    <div class="card my-3">
+                        <div class="card-body">
+                            <div class="d-flex">
+                                <div class="mr-2"><img style="display: block; object-fit: cover;" src="{% get_media_prefix %}{{ tutorial.avatar }}" alt="..." class="avatar avatar-lg rounded"></div>
+                                <div class="align-self-center">
+                                    <h6 class="card-title mb-2">{{ tutorial.title }} </h6>
+                                    <small style="font-size: .6em;">Added by <b>{{ tutorial.author}}</b> </small>
+                                </div>
+                                <div class="ml-auto align-self-center mr-2">
+                                    <h6 class="heading mt-2 text-green"><b> {{ tutorial.pricing }} </b></h6>
+                                </div>
+                                <div class="align-self-center">
+                                    <div> <a href="{{ tutorial.url }}" target="_blank" role="button" class="btn btn-sm btn-primary mb-2 px-3" style="font-size: .6em;">Go to
+                                            Course</a></div>
+                                    <div> <a href="" role="button" class="btn btn-sm btn-outline-primary px-4" style="font-size: .6em;">See Details</a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% else %}
+            <h2>No Resources Found</h2>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %} {% block scripts %}
+<script src="https://code.jquery.com/jquery-3.1.0.js"></script>
 <script>
-$(document).ready(function() {
+    let state = {
+        pricing: null,
+        medium: [],
+        level: [],
+        query: '{{ request.build_absolute_uri   }}'
+    }
+
+    $('.pricing').on('change', function() {
+        if (state.pricing) {
+            state.pricing = null
+        } else {
+            state.pricing = $(this).attr('value')
+        }
+
+        if ($(this).is(':checked')) {
+            $('.pricing').attr('disabled', true)
+            $(this).attr('disabled', false)
+        } else {
+            $('.pricing').attr('disabled', false)
+        }
+
+        console.log(state)
+        sendRequest()
+    })
 
 
-});
+    $('.medium').on('change', function() {
+        let value = $(this).attr('value')
+        let position = state.medium.indexOf(value)
+
+        if (position == -1) {
+            state.medium.push(value)
+        } else {
+            state.medium.splice(position, 1)
+        }
+        console.log(state)
+        sendRequest()
+    })
+
+
+
+    $('.level').on('change', function() {
+        let value = $(this).attr('value')
+        let position = state.level.indexOf(value)
+
+        if (position == -1) {
+            state.level.push(value)
+        } else {
+            state.level.splice(position, 1)
+        }
+        console.log(state)
+        sendRequest()
+    });
+    $('#clear-filter').on('click', function() {
+        state = {
+            pricing: null,
+            medium: [],
+            level: [],
+        }
+        $("input").prop("checked", false);
+        $("input").prop('disabled', false);
+        sendRequest()
+    })
+
+    function sendRequest() {
+        console.log('sending request')
+
+        $.ajax({
+            url: '{% url "course-filter" %}',
+            type: 'GET',
+            data: state,
+        }).done(function(res) {
+            console.log(res)
+            $('#tutorials-wrapper').empty()
+
+            if (res.length !== 0) {
+                res.map(function(tutorial) {
+                    let template = `
+                        <div class="card my-3">
+                            <div class="card-body">
+                                <div class="d-flex">
+                                    <div class="mr-2"><img style="display: block; object-fit: cover;" src="{% get_media_prefix %}${tutorial.avatar}" alt="..." class="avatar avatar-lg rounded"></div>
+                                    <div class="align-self-center">
+                                        <h6 class="card-title mb-2">${tutorial.title}</h6>
+                                        <small style="font-size: .6em;">Added by <b>${tutorial.author.username}</b> </small>
+                                    </div>
+                                    <div class="ml-auto align-self-center  mr-2">
+                                        <h6 class="heading mt-2 text-green"><b>${tutorial.pricing}</b></h6>
+                                       
+                                    </div>
+                                    <div class="align-self-center">
+                                        <div> <a href="${ tutorial.url }" target="_blank" role="button" class="btn btn-sm btn-primary mb-2 px-3" style="font-size: .6em;">Go to Course</a></div>
+                                        <div> <a href="" role="button" class="btn btn-sm btn-outline-primary px-4" style="font-size: .6em;">See Details</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `
+                    $('#tutorials-wrapper').append(template)
+                })
+            } else {
+                let notFoundTemplate = '<h1>No Tutorials Found with This Filter</h1>'
+                $('#tutorials-wrapper').append(notFoundTemplate)
+            }
+        }).fail(function() {
+            console.log('errrrrrrrrrrrrrrrrrrrrrrrr')
+        })
+    }
 </script>
 {% endblock %}

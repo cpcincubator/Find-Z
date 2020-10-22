@@ -1,26 +1,32 @@
-"""
-    findZ URL Configuration
+from django.contrib import admin
+from django.conf import settings
+from django.conf.urls.static import static
+from django.urls import path, re_path
+from main import views as main_views
+from account import views as account_views
 
-    The `urlpatterns` list routes URLs to views. For more information please see:
-        https://docs.djangoproject.com/en/3.0/topics/http/urls/
-    Examples:
-    Function views
-        1. Add an import:  from my_app import views
-        2. Add a URL to urlpatterns:  path('', views.home, name='home')
-    Class-based views
-        1. Add an import:  from other_app.views import Home
-        2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-    Including another URLconf
-        1. Import the include() function: from django.urls import include, path
-        2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
-from django.urls import path, include, re_path
-from main.views import not_found
 
 urlpatterns = [
-    path('admin/', include('adminpanel.urls')),
-    path('', include('main.urls')),
-    path('user/', include('userpanel.urls')),
-
-    re_path('.*', not_found, name='not-found'),
+    path('admin/', admin.site.urls),
+    path('search/', main_views.search, name="search"),
+    path('search/<slug:subcategory_slug>/', main_views.search_subcategory, name="search-subcategory"),
+    path('course-filter/', main_views.course_filter, name='course-filter'),
+    path('register/', account_views.register, name='register'),
+    path('login/', account_views.login, name='login'),
+    path('logout/', account_views.logout, name='logout'),
+    path('profile/', account_views.profile, name='profile'),
+    path('editprofile/', account_views.editprofile, name='editprofile'),
+    path('editpassword/', account_views.editpassword, name='editpassword'),
+    path('submission/', main_views.submit_tutorial, name='submit'),
+    path('submission-criteria/', main_views.guidelines, name='guidelines'),
+    path('', main_views.index, name='home'),
+    path('<slug:category_slug>/', main_views.category, name='category'),
+    path('<slug:category_slug>/<slug:sub_category_slug>/',
+         main_views.sub_category, name='sub-category'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)
+
+# handler404 = main.views.not_found

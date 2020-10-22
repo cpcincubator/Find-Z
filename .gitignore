@@ -1,11 +1,7 @@
-.idea
 .vscode
-env.py
-.env
+.idea
+__pycache__
 venv
 db.sqlite3
-*.pyc
-*.*.pyc
-*.scssc
 staticfiles
-env-sample.py
+media

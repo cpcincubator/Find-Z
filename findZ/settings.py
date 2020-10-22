@@ -1,39 +1,27 @@
+from pathlib import Path
+from decouple import config
 import os
-import cloudinary
-from env import *
-
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-SECRET_KEY = SECRET_KEY
-
-DEBUG = DEBUG
-
-cloudinary.config(
-    cloud_name=CLOUDINARY_CLOUD_NAME,
-    api_key=CLOUDINARY_API_KEY,
-    api_secret=CLOUDINARY_API_SECRET
-)
 
 
-LOGIN_URL = '/admin/login/'
+BASE_DIR = Path(__file__).resolve().parent.parent
 
-ALLOWED_HOSTS = ALLOWED_HOSTS
-# Application definition
+SECRET_KEY = config('SECRET_KEY', default='findZ')
+
+DEBUG = config('DEBUG', default=False, cast=bool)
+
+ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
-    'main.apps.MainConfig',
-    'adminpanel.apps.AdminpanelConfig',
-    'userpanel.apps.UserpanelConfig',
-    'cloudinary',
     'rest_framework',
-    'ckeditor',
-    'mathfilters',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'ckeditor',
+    'main',
+    'account',
 ]
 
 MIDDLEWARE = [
@@ -46,7 +34,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'findZ.urls'
+ROOT_URLCONF = 'findz.urls'
 
 TEMPLATES = [
     {
@@ -64,19 +52,21 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'findZ.wsgi.application'
+WSGI_APPLICATION = 'findz.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 DATABASES = {
-    'default': DB_CONFIG
+    'default': {
+        'ENGINE': config('DB_ENGINE', default='django.db.backends.sqlite3'),
+        'NAME': config('DB_NAME', default=os.path.join(BASE_DIR, 'db.sqlite3')),
+        'USER':config('DB_USER', default='root'),
+        'PASSWORD': config('DB_PASSWORD', default=''),
+        'HOST': config('DB_HOST', default='127.0.0.1'),
+        'PORT': config('DB_PORT', default=3306, cast=int),
+
+    }
 }
 
-
-# Password validation
-# https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -94,9 +84,6 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# Internationalization
-# https://docs.djangoproject.com/en/3.0/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
@@ -108,27 +95,10 @@ USE_L10N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.0/howto/static-files/
-
 STATIC_URL = '/static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-CKEDITOR_CONFIGS = {
-    'default': {
-        'toolbar': [
-            ['Undo', 'Redo',
-             '-', 'Bold', 'Italic', 'Underline',
-             '-', 'Link', 'Unlink',
-             '-', 'Format',
-             '-', 'TextColor','BGColor',
-             '-', 'Maximize',
-            ],
-        ],
-        'height': '100%',
-        'width': '102%',
-        'toolbarCanCollapse': False,
-    },
+MEDIA_URL = '/media/'
 
-}
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

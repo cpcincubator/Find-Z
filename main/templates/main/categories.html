@@ -1,0 +1,83 @@
+{% extends 'main/base.html' %} {% load static %} {% block meta %}
+<title>{{ category.title }} | FindZ</title>
+{% endblock %} {% block body %} {% include 'main/partials/navbar.html' %}
+<div class="wrapper py-5">
+    <div class="container-fluid card mt--5">
+        <div class="card-body d-flex flex-row mx-md-6 mx--3">
+            <div class=" align-self-center mr-4">
+                <h4 style="font-weight: 700;">{{ category.title }} Courses</h4>
+                <small style="font-size: .88em;">Find paid and free {{ category.title }} tutorials and courses.<br>
+                Choose from select topics and learn from the best instructors and institutions.</small>
+            </div>
+            <div class="ml-md-auto align-self-center"><img style="display: block; object-fit: cover;" src="{% get_media_prefix %}{{ category.avatar }}" alt="..." class="avatar avatar-lg rounded"></div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row py-4" id="catagory-box">
+            {% for sub_category in sub_categories %}
+            <div class="col-lg-4">
+                <div class="card my-3">
+                    <div class="card-body">
+                        <a class="card-link" href={% url 'sub-category' category.slug sub_category.slug %}>
+                            <div class="d-flex">
+                                <div class="mr-2"><img style="display: block; object-fit: cover;" src="{% get_media_prefix %}{{ sub_category.avatar }}" alt="..." class="avatar avatar-xs rounded"></div>
+                                <h6 class="card-title">{{ sub_category.title }}<br>
+                                    <small>{{ sub_category.tutorial_set.all.count }} online courses</small>
+                                </h6>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %} {% block scripts %}
+<script>
+    $(document).ready(function() {
+        $('#search-q').on('keyup', function(e) {
+            e.preventDefault()
+            let searchQuery = $('#search-q').val()
+
+            $.ajax({
+                url: '/search{{ request.path }}',
+                type: 'GET',
+                data: {
+                    q: searchQuery
+                },
+            }).done(function(res) {
+                let subCategories = res
+                console.log(subCategories)
+                $("#catagory-box").empty()
+
+                if (subCategories.length !== 0) {
+                    subCategories.map(function(subCategory) {
+                        var subCategoryTemplate = `
+                            <div class="col-lg-4">
+                                <div class="card my-3">
+                                    <div class="card-body">
+                                        <a class="card-link" href=${subCategory.slug}>
+                                            <div class="d-flex">
+                                                <div class="mr-2"><img style="display: block; object-fit: cover;" src="{% get_media_prefix %}{{ sub_category.avatar }}" alt="..." class="avatar avatar-xs rounded"></div>
+                                                <h6 class="card-title">${subCategory.title}<br>
+                                                    <small>${subCategory.course_count} online courses</small>
+                                                </h6>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        `
+                        $("#catagory-box").append(subCategoryTemplate)
+                    })
+                } else {
+                    let notFoundTemplate = `<h2>No Results Found</h2>`
+                    $("#catagory-box").append(notFoundTemplate)
+                }
+            })
+        })
+    });
+</script>
+{% endblock %}

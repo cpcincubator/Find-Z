@@ -1,116 +1,112 @@
 {% load static %}
 
 <nav class="navbar navbar-expand navbar-light bg-primary">
-  <div class="container-fluid de-flex py-2">
-    <a class="navbar-brand mr-auto" href="{% url 'index' %}"><i class="fas fa-greater-than-equal"></i> <b>Find-Z</b></a>
-    <!-- Search -->
-    
-      <form class="form-inline col-3">
-        <div class="col-12">
-          <div class="input-group input-group-alternative input-group-sm">
-            <div class="input-group-prepend">
-              <span class="input-group-text"><i class="ni ni-zoom-split-in"></i></span>
+    <div class="container-fluid de-flex py-2">
+        <a class="navbar-brand mr-auto" href="{% url 'home' %}"><i class="fas fa-greater-than-equal"></i> <b>Find-Z</b></a>
+        <!-- Search -->
+
+        <form method="GET" action={% url 'search' %} class="form-inline col-3" id="inside-search">
+            <div class="col-12">
+                <div class="input-group input-group-alternative input-group-sm">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="ni ni-zoom-split-in"></i></span>
+                    </div>
+                    <input id="search-q" name="q" class="form-control form-control-alternative" placeholder="Search" type="text">
+                </div>
             </div>
-            <input class="form-control form-control-alternative" placeholder="Search" type="text">
-          </div>
+        </form>
+        <!-- Sign Up/In -->
+        <div class="align-self-center">
+            <ul class="navbar-nav right mr-3">
+                {% if user.is_authenticated %}
+                <li class="nav-item align-self-center">
+                    <a href="{% url 'submit' %}"><button type="button" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#modal-form"><span><img class="icon-plus" src={% static 'main/img/icons/add.svg' %} alt="Design"></span> Submit a tutorial</button></a>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <div class="media align-items-center">
+                            <span class="avatar avatar-sm rounded-circle">
+                <img alt="Image placeholder" src="{% get_media_prefix %}{{ request.user.profile.avatar }}">
+              </span>
+                            <div class="media-body ml-2 d-none d-lg-block">
+                                <span class="mb-0 text-sm  font-weight-bold">{{user.username}}</span>
+                            </div>
+                        </div>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <div class="dropdown-header noti-title">
+                            <h6 class="text-overflow m-0">Welcome!</h6>
+                        </div>
+                        <a href="{% url 'profile' %}" class="dropdown-item">
+                            <i class="ni ni-single-02"></i>
+                            <span>My profile</span>
+                        </a>
+                        <a href="#!" class="dropdown-item">
+                            <i class="ni ni-settings-gear-65"></i>
+                            <span>Settings</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="{% url 'logout' %}" class="dropdown-item">
+                            <i class="ni ni-user-run"></i>
+                            <span>Logout</span>
+                        </a>
+                    </div>
+                </li>
+                {% else %}
+                <li class="nav-item align-self-center">
+                    <a href="{% url 'login' %}"> <button type="button" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#signin-form"> Sign Up / Sign In</button> </a>
+                </li>
+                {% endif %}
+            </ul>
         </div>
-      </form>
-    <!-- Sign Up/In -->
-      <div class="align-self-center">
-      <ul class="navbar-nav right mr-3">
-        <li class="nav-item align-self-center">
-          <button type="button" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#modal-form"><span><img class="icon-plus" src={% static 'main/img/icons/add.svg' %} alt="Design"></span> Submit a tutorial</button>
-        </li>
-      {% if user.is_authenticated %} 
-        <li class="nav-item dropdown">            
-          <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <div class="media align-items-center">
-              <span class="avatar avatar-sm rounded-circle">
-                <img alt="Image placeholder" src="{% static 'adminpanel/img/theme/admin-user.jpg' %}">
-              </span>
-              <div class="media-body ml-2 d-none d-lg-block">
-                <span class="mb-0 text-sm  font-weight-bold">{{user.username}}</span>
-              </div>
-            </div>
-          </a>
-          <div class="dropdown-menu dropdown-menu-right">
-            <div class="dropdown-header noti-title">
-              <h6 class="text-overflow m-0">Welcome!</h6>
-            </div>
-            <a href="#!" class="dropdown-item">
-              <i class="ni ni-single-02"></i>
-              <span>My profile</span>
-            </a>
-            <a href="#!" class="dropdown-item">
-              <i class="ni ni-settings-gear-65"></i>
-              <span>Settings</span>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a href="{% url 'logout' %}" class="dropdown-item">
-              <i class="ni ni-user-run"></i>
-              <span>Logout</span>
-            </a>
-          </div>          
-        </li>
-      {% else %}
-        <li class="nav-item align-self-center">
-          <button type="button" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#signin-form"> Sign Up / Sign In</button>
-        </li>
-      {% endif %}  
-      </ul>	
-      </div>
 
-      <ul class="navbar-nav right-small">
-      {% if user.is_authenticated %} 
-        <li class="nav-item dropdown mr-2">            
-          <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <div class="media align-items-center">
-              <span class="avatar avatar-sm rounded-circle">
-                <img alt="Image placeholder" src="{% static 'adminpanel/img/theme/admin-user.jpg' %}">
+        <ul class="navbar-nav right-small">
+            {% if user.is_authenticated %}
+            <li class="nav-item dropdown mr-2">
+                <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <div class="media align-items-center">
+                        <span class="avatar avatar-sm rounded-circle">
+                <img alt="Image placeholder" src="{% get_media_prefix %}{{ request.user.profile.avatar }}">
               </span>
-              <div class="media-body ml-2 d-none d-lg-block">
-                <span class="mb-0 text-sm  font-weight-bold">{{user.username}}</span>
-              </div>
-            </div>
-          </a>
-          <div class="dropdown-menu dropdown-menu-right dropdown-menu-sm">
-            <div class="dropdown-header noti-title">
-              <h6 class="text-overflow m-0">Welcome!</h6>
-            </div>
-            <a href="#!" class="dropdown-item">
-              <i class="ni ni-single-02"></i>
-              <span>My profile</span>
-            </a>
-            <a href="#!" class="dropdown-item">
-              <i class="ni ni-settings-gear-65"></i>
-              <span>Settings</span>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a href="{% url 'logout' %}" class="dropdown-item">
-              <i class="ni ni-user-run"></i>
-              <span>Logout</span>
-            </a>
-          </div>          
-        </li>
-      {% else %}
-        <li class="nav-item mr-2">
-          <button type="button" class="btn btn-info btn-round btn-sm" data-toggle="modal" data-target="#signin-form">Sign In</button>
-        </li>
-      {% endif %} 
-      </ul>	
+                        <div class="media-body ml-2 d-none d-lg-block">
+                            <span class="mb-0 text-sm  font-weight-bold">{{user.username}}</span>
+                        </div>
+                    </div>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right dropdown-menu-sm">
+                    <div class="dropdown-header noti-title">
+                        <h6 class="text-overflow m-0">Welcome!</h6>
+                    </div>
+                    <a href="#!" class="dropdown-item">
+                        <i class="ni ni-single-02"></i>
+                        <span>My profile</span>
+                    </a>
+                    <a href="#!" class="dropdown-item">
+                        <i class="ni ni-settings-gear-65"></i>
+                        <span>Settings</span>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="{% url 'logout' %}" class="dropdown-item">
+                        <i class="ni ni-user-run"></i>
+                        <span>Logout</span>
+                    </a>
+                </div>
+            </li>
+            {% else %}
+            <li class="nav-item mr-2">
+                <button type="button" class="btn btn-info btn-round btn-sm" data-toggle="modal" data-target="#signin-form">Sign In</button>
+            </li>
+            {% endif %}
+        </ul>
 
-  </div>
+    </div>
 </nav>
 
-{% include 'main/partials/signup.html' %}
-
-
-
-{% block scripts %}
+<!-- {% block scripts %}
 <script src="{% static 'main/js/core/jquery.min.js' %}"></script>
 <script src="{% static 'main/js/core/popper.min.js' %}"></script>
 <script src="{% static 'main/js/core/bootstrap.min.js' %}"></script>
-<script src="{% static 'main/js/argon-design-system.min.js' %}"></script> 
+<script src="{% static 'main/js/argon-design-system.min.js' %}"></script> -->
 
-{% endblock  %}
-        
+{% endblock %}

@@ -1,0 +1,73 @@
+{% extends 'main/base.html' %} {% load static %} {% block meta %}
+<title>submission-criteria| FindZ</title>
+{% endblock %} {% block styles %}
+
+<style>
+    .container {
+        width: 60%;
+    }
+    body {
+        
+    font-family: sans-serif;
+    font-size: 14px;
+    padding-right: 0!important;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: #383838;
+    
+    opacity: 1;
+    
+}
+    
+    h1 {
+        color: #007AFF;
+    }
+
+    .head {
+        color: #383838;
+    }
+    .content{
+        line-height: 20px;
+    }
+</style>
+
+{% endblock %} {% block body %} {% include 'main/partials/navbar.html' %}
+
+<div class="container mt-5 ">
+    <h1 class="font-weight-bold mb-4">Submissions & Approvals</h1>
+    <p class="font-weight-bolder head mb-1">Are there any submission guidelines I should know about?</p>
+    <p class="content mt-2">There's just one simple guideline - Your submission should educate the learners about the basics or advanced
+        concepts of a particular topic holistically, not just a part of it. Think of it this way - would this resource
+        be a good starting point if you are setting out to learn a programming language or design tool/thinking from
+        scratch?</p>
+    <p class="mb-1">So, the following are <b class="font-weight-bold ">good</b> examples:</p>
+    <ul>
+        <li>Basics of Python</li>
+        <li>Concepts of Advanced Javascript</li>
+        <li>From beginner to advanced in Photoshop</li>
+    </ul>
+    <p class="mb-1">The following are <b class="font-weight-bold">bad</b> examples:</p>
+    <ul>
+        <li>Building a simple login/logout system in PHP</li>
+        <li>How to use Twitter OAuth</li>
+        <li>How to use the 3d effect in Adobe Illustrator</li>
+    </ul>
+    <p class="mb-1">Submitted tutorials are evaluated by the community moderators.</p>
+    <p class="content mb-1">It can take up to 7 days to vet the submitted tutorial. You will be informed of approval or rejection via email
+        notification.</p>
+    <p class="content mb-1">In rare cases, when community moderators could not reach a consensus about the quality of submitted tutorial, it
+        might be kept in a queue and would be revalidated after a few weeks. It will happen when your tutorial is
+        recently launched, and no course/tutorial preview is available without signing up or paying.</p>
+</div>
+
+
+
+
+{% endblock %} {% block scripts %}
+<script>
+    $(document).ready(function () {
+
+
+    });
+</script>
+{% endblock %}

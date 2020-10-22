@@ -1,0 +1,147 @@
+{% extends 'main/base.html' %} {% load static %} {% block meta %}
+<title>Sign Up - Find-Z</title>
+{% endblock %} {% block styles %}
+<style type="text/css">
+    body {
+        background-color: #DADADA;
+    }
+</style>
+{% endblock %} {% block body %}
+
+<nav class="navbar navbar-expand navbar-light bg-primary">
+    <div class="container-fluid de-flex py-2">
+        <a class="navbar-brand mr-auto" href="{% url 'home' %}"><i class="fas fa-greater-than-equal"></i> <b>Find-Z</b></a>
+    </div>
+</nav>
+
+<div class="container pt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-5 col-md-7">
+            <div class="card bg-secondary border-0 mb-0">
+                <div class="card-body px-lg-5 py-lg-5">
+                    <div class="text-center text-muted mb-4">
+                        <big>Sign Up</big>
+                    </div>
+                    <form role="form" method="POST">
+                        {% csrf_token %}
+                        <div class="d-flex">
+                            <div class="form-group mb-3 mr-2">
+                                <div class="input-group input-group-merge input-group-alternative">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="far fa-user"></i></span>
+                                    </div>
+                                    <input class="form-control" type="text" name="first_name" placeholder="First Name">
+                                </div>
+                            </div>
+                            <div class="form-group mb-3 ml-2">
+                                <div class="input-group input-group-merge input-group-alternative">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="far fa-user"></i></span>
+                                    </div>
+                                    <input class="form-control" type="text" name="last_name" placeholder="Last Name">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <div class="input-group input-group-merge input-group-alternative">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="far fa-user"></i></span>
+                                </div>
+                                <input class="form-control" type="text" name="username" placeholder="Username">
+                            </div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <div class="input-group input-group-merge input-group-alternative">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="ni ni-email-83"></i></span>
+                                </div>
+                                <input class="form-control" type="email" name="email" placeholder="Email">
+                            </div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <div class="input-group input-group-merge input-group-alternative">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                                </div>
+                                <input class="form-control" type="password" name="password1" placeholder="Password">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group input-group-merge input-group-alternative">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                                </div>
+                                <input class="form-control" type="password" name="password2" placeholder="Re-type Password">
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary my-2 sign-up">Sign UP</button>
+                        </div>
+                        <div class="form-group">
+                            <div class="alert alert-danger" id="ins_error" style="display:none">
+                            </div>
+                        </div>
+                        {% if messages %} {% for message in messages %}
+                        <div class="form-group">
+                            <div class="alert alert-danger" id="ins_error2">
+                                {{ message }}
+                            </div>
+                        </div>
+                        {% endfor %} {% endif %}
+                    </form>
+                    <div class="text-center m-2">
+                        <small>Already have an account? <a href={% url 'login' %}><button type="button" class="btn btn-outline-primary btn-round btn-sm sign-up">Sign In</button></a></small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} {% block scripts %}
+<script>
+    $(document).ready(function() {
+        $(document).on("click", ".sign-up", function(e) {
+            var first_name = $("input[name='first_name']").val().trim();
+            var last_name = $("input[name='last_name']").val().trim();
+            var email = $("input[name='email']").val().trim();
+            var username = $("input[name='username']").val().trim();
+            var password1 = $("input[name='password1']").val().trim();
+            var password2 = $("input[name='password2']").val().trim();
+
+            if (first_name == "") {
+                $("#ins_error").text("First Name can't be blank!");
+                $("#ins_error").show();
+                $("button[type='submit']").prop('disabled', true);
+            } else if (last_name == "") {
+                $("#ins_error").text("Last Name can't be blank!");
+                $("#ins_error").show();
+                $("button[type='submit']").prop('disabled', true);
+            } else if (username == "") {
+                $("#ins_error").text("Username can't be blank!");
+                $("#ins_error").show();
+                $("button[type='submit']").prop('disabled', true);
+            } else if (email == "") {
+                $("#ins_error").text("Email can't be blank!");
+                $("#ins_error").show();
+                $("button[type='submit']").prop('disabled', true);
+            } else if (password1 == "") {
+                $("#ins_error").text("Password can't be blank!");
+                $("#ins_error").show();
+                $("button[type='submit']").prop('disabled', true);
+            } else if (password2 == "") {
+                $("#ins_error").text("Password can't be blank!")
+                $("#ins_error").show();
+                $("button[type='submit']").prop('disabled', true);
+            } else {
+                $("#ins_error").hide()
+                $("button[type='submit']").prop('disabled', false);
+            }
+        });
+        $(document.body).click(function() {
+            $("#ins_error").hide();
+            $("#ins_error2").hide();
+            $("button[type='submit']").prop('disabled', false);
+        });
+    });
+</script>
+{% endblock %}

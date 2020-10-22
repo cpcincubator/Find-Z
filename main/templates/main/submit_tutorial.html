@@ -1,0 +1,232 @@
+{% extends 'main/base.html' %} {% load static %} {% block meta %}
+<title>Submission-Find-Z</title>
+{% endblock %} {% block styles %}
+<style type="text/css">
+    body {
+        background-color: #DADADA;
+    }
+    
+    p .text-capitalize {
+        width: 163px;
+        height: 20px;
+        color: hsl(0, 0%, 22%);
+        font-size: 14px;
+        line-height: 20px;
+        gap: normal;
+        text-align: left;
+        text-transform: capitalize;
+    }
+    
+    @media screen and (max-width: 769px) {
+        .media {
+            width: 100%;
+        }
+    }
+</style>
+{% endblock %} {% block body %} {% include 'main/partials/navbar.html' %}
+<div class="container pt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-7 col-md-7">
+            <div class="card bg-secondary border-0 mb-0">
+                <div class="card-body px-lg-5 py-lg-5">
+                    <div class="text-center text-muted mb-4">
+                        <h2 class="font-weight-bold">Submit a Tutorial/Course</h2>
+                        <p class="mb-1">Feel free to submit tutorials in any language.</p>
+                        <p class="mb-0">Paste the link below:</p>
+                        <hr class="mt-1">
+                    </div>
+                    <form role="form" method="POST">
+                        {% csrf_token %}
+
+                        <div class="form-group mb-3">
+                            <div class="input-group input-group-merge input-group-alternative">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i><svg width="2em" height="1.5em"
+                                                viewBox="0 0 16 16" class="bi bi-link-45deg" fill="currentColor"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M4.715 6.542L3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.001 1.001 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z" />
+                                                <path
+                                                    d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 0 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 0 0-4.243-4.243L6.586 4.672z" />
+                                            </svg></i></span>
+                                </div>
+                                <input class="form-control" type="text" name="url" placeholder="URL of the tutorial">
+                            </div>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <div class="input-group input-group-merge input-group-alternative">
+
+                                <input class="form-control font " name="text" placeholder="Tell us more about this 'tutorial/course' (optional)"></input>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <p class="mb-0">SubCategory:</p>
+                            <div class="input-group input-group-merge input-group-alternative">
+
+                                <input class="form-control" type="text" name="subcategory" placeholder="Python, Anguler, React etc..">
+                            </div>
+                        </div>
+
+
+                        <div class="row form-group modal-sec-tags">
+                            <div class="tag-info-title col-md-3 ">
+                                <p class="text-capitalize">tags:</p>
+                            </div>
+                            <div class=" col-md-8 control-group radio-checkbox modal-form-sec">
+                                <div class="row">
+                                    <div class="custom-control custom-checkbox  mb-1 col-md-3">
+                                        <input class="custom-control-input pricing" name="free" value="free" id="free" type="checkbox">
+                                        <label class="custom-control-label" for="free">
+                                            <span>Free</span>
+                                        </label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox mb-3 col-md-3">
+                                        <input class="custom-control-input pricing" name="paid" value="paid" id="paid" type="checkbox">
+                                        <label class="custom-control-label" for="paid">
+                                            <span>Paid</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="row form-group modal-sec-tags ">
+                            <div class="tag-info-title col-md-3 ">
+                                <p class="text-capitalize">Medium:</p>
+                            </div>
+                            <div class=" col-md-8 control-group radio-checkbox modal-form-sec">
+                                <div class="row">
+                                    <div class="custom-control custom-checkbox  mb-1 col-md-3">
+                                        <input class="custom-control-input medium" name="free" value="free" id="Video" type="checkbox">
+                                        <label class="custom-control-label" for="Video">
+                                            <span>Video</span>
+                                        </label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox mb-2 col-md-3">
+                                        <input class="custom-control-input medium" name="paid" value="paid" id="Blog" type="checkbox">
+                                        <label class="custom-control-label" for="Blog">
+                                            <span>Blog</span>
+                                        </label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox mb-2 col-md-3">
+                                        <input class="custom-control-input medium" name="paid" value="paid" id="Book" type="checkbox">
+                                        <label class="custom-control-label" for="Book">
+                                            <span>Book</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+                        <div class="row form-group modal-sec-tags media ">
+                            <div class="tag-info-title col-md-4 ">
+                                <p class="text-capitalize">This course is for:</p>
+                            </div>
+                            <div class=" col-md-8 control-group radio-checkbox modal-form-sec">
+                                <div class="">
+                                    <div class="custom-control custom-checkbox  mb-1 col-md-3">
+                                        <input class="custom-control-input level" name="free" value="free" id="Advanced" type="checkbox">
+                                        <label class="custom-control-label" for="Advanced">
+                                            <span>Advanced</span>
+                                        </label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox mb-1 col-md-3">
+                                        <input class="custom-control-input level" name="paid" value="paid" id="Beginner" type="checkbox">
+                                        <label class="custom-control-label" for="Beginner">
+                                            <span>Beginner</span>
+                                        </label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox mb-3 col-md-3">
+                                        <input class="custom-control-input level" name="paid" value="paid" id="Intermediate" type="checkbox">
+                                        <label class="custom-control-label" for="Intermediate">
+                                            <span>Intermediate</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary full_width spinning-loader btn-large btn-block">
+                                <span class="txt text-capitalize  ">submit</span>
+                                <i class="ion-md-radio-button-off"></i>
+                            </button>
+                        </div>
+                    </form>
+                    <div class="submit-modal-footer margintop-lg">
+                        <p>Have you read our submission <a target="_blank" href="{% url 'guidelines' %}">guidelines</a>?</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %} {% block scripts %}
+<script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+<script>
+    let state = {
+        pricing: null,
+        medium: [],
+        level: [],
+        csrfmiddlewaretoken: '{{ csrf_token }}',
+    }
+
+    $('.pricing').on('change', function() {
+        if (state.pricing) {
+            state.pricing = null
+        } else {
+            state.pricing = $(this).attr('value')
+        }
+
+        if ($(this).is(':checked')) {
+            $('.pricing').attr('disabled', true)
+            $(this).attr('disabled', false)
+        } else {
+            $('.pricing').attr('disabled', false)
+        }
+
+        console.log(state)
+        sendRequest()
+    })
+
+    $('.medium').on('change', function() {
+        if (state.medium) {
+            state.medium = null
+        } else {
+            state.medium = $(this).attr('value')
+        }
+
+        if ($(this).is(':checked')) {
+            $('.medium').attr('disabled', true)
+            $(this).attr('disabled', false)
+        } else {
+            $('.medium').attr('disabled', false)
+        }
+
+        console.log(state)
+        sendRequest()
+    })
+
+    $('.level').on('change', function() {
+        let value = $(this).attr('value')
+        let position = state.level.indexOf(value)
+
+        if (position == -1) {
+            state.level.push(value)
+        } else {
+            state.level.splice(position, 1)
+        }
+        console.log(state)
+        sendRequest()
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends 'main/base.html' %} {% load static %} {% block meta %}
+<title>{{user.first_name}} | Profile | FindZ</title>
+{% endblock %} {% block body %} {% include 'main/partials/navbar.html' %}
+<style>
+    .scroll {
+        border: 2px solid black;
+        max-height: 250px;
+        max-width: auto;
+        overflow: scroll;
+        float: left;
+    }
+</style>
+<div class="container py-4">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-1 mt-2">
+                    <img class="img rounded-sm" src=" {% get_media_prefix %}{{ request.user.profile.avatar }} " alt="member" height="100px" width="100px">
+                </div>
+                <div class="col-md-8 ml-5">
+                    <h3>{{user.first_name}} {{user.last_name}}</h3>
+                    <i class="fab fa-facebook fa-2x"></i>
+                    <i class="fab fa-github fa-2x"></i>
+                    <i class="fab fa-twitter fa-2x"></i>
+                    <i class="fab fa-discord fa-2x"></i>
+                    <p>Member Since: August, 2020</p>
+                </div>
+                <div class="col-2">
+                    <br><br>
+                    <a href="{% url 'editprofile' %}"><button type="button" class="btn   btn-primary btn-sm btn-block font-weight-bold py-2 mr-0 ">Edit Profile</button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr><br><br>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="scroll">
+                <h1>Hello</h1>
+                <p>
+                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has
+                    survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently
+                    with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Why do we use it? It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.
+                    The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors
+                    now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected
+                    humour and the like). Where does it come from? Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock,
+                    a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable
+                    source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance.
+                    The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

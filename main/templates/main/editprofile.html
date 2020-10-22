@@ -1,0 +1,290 @@
+{% extends 'main/base.html' %} {% load static %} {% block meta %}
+<title>Edit Profile | FindZ</title>
+{% endblock %} {% block body %} {% include 'main/partials/navbar.html' %}
+
+<style>
+    label {
+        color: #7b7b7b;
+    }
+    
+    label {
+        display: inline-block;
+        max-width: 100%;
+        margin-bottom: 5px;
+        font-weight: 700;
+    }
+    
+    label {
+        cursor: default;
+    }
+    
+    .page--section-heading {
+        line-height: 1.2;
+        padding: 10px 0;
+    }
+    
+    .page--section-heading {
+        font-size: 30px!important;
+        font-weight: 600!important;
+    }
+    
+    .file-upload {
+        margin: 1.5rem 0 0;
+    }
+    
+    .file-upload,
+    .file-upload:active,
+    .file-upload:hover {
+        transition: background-color .1s, border-color .1s, color .1s, fill .1s;
+    }
+    
+    .file-upload input[type=file] {
+        position: fixed;
+        top: -10000px;
+    }
+    
+    .file-upload {
+        display: inline-block;
+        vertical-align: middle;
+        border: 1px solid #d9d9d9;
+        border-radius: 3px;
+        padding: 6px 12px;
+        font-size: 14px;
+        font-weight: 400;
+        cursor: pointer;
+    }
+    
+    .file-upload .txt {
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        line-height: 20px;
+        text-align: center;
+    }
+    
+    .file-upload .txt i {
+        transform: none;
+        display: inline-block;
+        transform: scale(1.0);
+        margin-right: 10px;
+    }
+    
+    .help-text {
+        font-size: 12px;
+        color: #a7a9ac;
+    }
+    
+    .marginleft-xs {
+        margin-left: 5px!important;
+    }
+    
+    .form-control {
+        border-radius: 3px;
+        height: 42px;
+        padding: 6px 12px 8px;
+        border-color: #d9d9d9;
+        box-shadow: none;
+        appearance: none;
+    }
+    
+    .form-control {
+        width: 100%;
+        height: 34px;
+        padding: 6px 12px;
+        background-color: #fff;
+        background-image: none;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+        transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    }
+    
+    .form-control,
+    output {
+        display: block;
+        line-height: 1.42857143;
+        color: #555;
+    }
+    
+    .form-group {
+        margin-bottom: 15px;
+    }
+    /* .form-control {
+        height: 40px;
+        color: #383838;
+        font-size: 14px;
+        font-weight: 400;
+        border-radius: 3px;
+        padding: 6px 12px 8px;
+        border-color: #d9d9d9;
+        box-shadow: none;
+        appearance: none;
+        width: 100%;
+        background-color: #fff;
+        background-image: none;
+        border: 1px solid #ccc;
+        transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    } */
+    
+    textarea {
+        resize: none;
+    }
+    
+    .heading-row {
+        display: flex;
+        align-items: center;
+        color: #383838;
+        font-size: 16px;
+        font-weight: 600;
+        padding: 0;
+        text-transform: uppercase;
+        margin: 0 0 25px;
+        position: relative;
+    }
+</style>
+<div class="col-xs-12 text-center margintb-lg">
+    <div class="page--section-heading in-block text-primary">Profile Information</div>
+    <p>Your profile is 44% complete</p>
+</div>
+<div class="container shadow-sm p-3 mb-5 bg-white rounded">
+    <span class="heading-row "><i class="fas fa-info-circle"></i>Basic Information</span>
+    <div class="row">
+        <div class="col-md-3">
+            <img class="img rounded-sm" src="{% get_media_prefix %}{{ request.user.profile.avatar }}" alt="" height="150px" width="150px">
+            <!-- <button class="remove-profile js-remove-profile"><i class="far fa-times-circle"></i></button> -->
+            <label class="file-upload">
+                <input type="file" name="avatar" class="user-avatar-input">
+                <span class="txt"> <i class="fas fa-cloud-upload-alt"> </i>Upload Photo</span>
+            </label>
+            <div class="help-block">
+                <span class="marginleft-xs help-text text-center">(.jpg, .jpeg, .png and Max Size 3 MB)</span>
+            </div>
+        </div>
+
+        <div class="form-group col-md-5 border-box">
+            <div class="form-group col-xs-12  col-sm-12
+            ">
+                <label for="">First Name<span class="required-text">*</span></label>
+                <input type="text" name="first_name" value="{{user.first_name}}" class="form-control" />
+                <div class="help-block"></div>
+            </div>
+
+            <div class="form-group col-xs-12  col-sm-12
+            ">
+                <label for="">Last Name</label>
+                <input type="text" name="last_name" value="{{user.last_name}}" class="form-control" />
+                <div class="help-block"></div>
+            </div>
+
+            <div class="form-group col-xs-12  col-sm-12 ">
+                <label for="">Gender</label>
+                <select name="gender" class="form-control">
+                <option value="">{{ request.user.profile.gender }}</option>
+                                                                        <option value="Female" >female</option>
+                                                                        <option value="Male" >male</option>
+                                                                        <option value="Other" >other</option>
+                                                                </select>
+                <div class="help-block"></div>
+            </div>
+
+            <div class="form-group col-xs-12  col-sm-12
+            ">
+                <label for="">Contact</label>
+                <input name="dob" value="{{ request.user.profile.contact }}" class="form-control js-user-dob" autocomplete="off" />
+                <div class="help-block"></div>
+            </div>
+        </div>
+        <div class="form-group col-md-4">
+            <label for="">Username<span class="required-text">*</span></label>
+            <input required type="text" name="username" data-id="172998" data-token="nCvHVmJlLwMo3Mp6dlGjelBwKHpEoagg45agGyx5" value="{{user.username}}" data-url="https://hackr.io/users/username_availability" class="form-control username-input" />
+            <div class="user-profile-link">
+                <p class="help-block">https://findz.com/drake_guy</p>
+                <p class="username-error-block"></p>
+                <p class="username-success-block"></p>
+            </div>
+            Your current email is {{ user.email }}. Change your
+            <label>
+                <a class="label-link" href="{% url 'editpassword' %}" target="_blank">password</a>
+            </label>
+
+
+
+            <label for="">About Me</label>
+            <textarea rows="4" name="about" class="form-control about-input" placeholder="{{ request.user.profile.about }}"></textarea>
+            <div class="help-block"></div>
+            <div class="help-block about-warning"></div>
+        </div>
+    </div>
+</div>
+<div class="container shadow-sm p-3 mb-5 bg-white rounded">
+    <div class="form-sec">
+        <div class="row">
+            <div class="col-md-12">
+                <span class="heading-row"><i class="fa fa-mortar-board icon-header"></i>Professional Details</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label for="">Profession</label>
+                <select name="profession_id" class="form-control">
+                    <option value="0" selected>{{ request.user.profile.profession }}</option>
+                    <option value="1" >Student</option>
+                    <option value="2" >Developer</option>
+                    <option value="3" >Industry Professional (Non-Technical)</option>
+                    <option value="4" >Research</option>
+                    <option value="5" >Not Working/Unemployed</option>
+                    <option value="6" >Others</option>
+                </select>
+                <div class="help-block"></div>
+            </div>
+            <div class="form-group col-xs-12 col-sm-6
+                ">
+                <label for="">Experience</label>
+                <input type="text" maxlength="2" name="Experience" value="" class="form-control" disabled />
+                <div class="help-block"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container shadow-sm p-3 mb-5 bg-white rounded">
+    <div class="form-sec">
+        <div class="row">
+            <div class="col-md-12">
+                <span class="heading-row"><i class="fa fa-globe icon-header"></i>On the web</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-xs-12  col-sm-6
+            ">
+                <label for="">LinkedIn Profile Url</label>
+                <input type="text" name="linkedin_url" value="" class="form-control" />
+                <div class="help-block"></div>
+            </div>
+
+            <div class="form-group col-xs-12 col-sm-6
+            ">
+                <label for="">Github Profile Url</label>
+                <input type="text" name="github_url" value="{{ request.user.profile.github }}" class="form-control" />
+                <div class="help-block"></div>
+            </div>
+
+            <div class="form-group col-xs-12  col-sm-6
+            ">
+                <label for="">Website Url</label>
+                <input type="text" name="website_url" value="" class="form-control" />
+                <div class="help-block"></div>
+            </div>
+
+            <div class="form-group col-xs-12  col-sm-6
+            ">
+                <label for="">Twitter Profile Url</label>
+                <input type="text" name="twitter_url" value="" class="form-control" />
+                <div class="help-block"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-group col-xs-12 margintop-md text-center">
+    <button type="submit" class="btn btn-md btn-primary">Save Changes</button>
+</div>
+{% endblock %}
